@@ -326,6 +326,10 @@ code {
   max-width: 160px;
   text-align: left;
   padding-left: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.85rem;
 }
 
 /* Responsive table adjustments */
@@ -346,6 +350,29 @@ code {
   .interactive-table td:first-child {
     min-width: 100px;
     max-width: 120px;
+    font-size: 0.75rem;
+    padding-left: 0.6rem;
+  }
+  
+  .interactive-table td:first-child {
+    font-size: 0.7rem;
+    letter-spacing: -0.2px;
+  }
+  
+  .interactive-table td:first-child strong {
+    font-size: 0.7rem;
+    letter-spacing: -0.3px;
+  }
+  
+  .interactive-table td.long-model-name {
+    font-size: 0.65rem !important;
+    letter-spacing: -0.4px;
+    padding: 0.6rem 0.5rem;
+  }
+  
+  .interactive-table td.long-model-name strong {
+    font-size: 0.65rem !important;
+    letter-spacing: -0.5px;
   }
 }
 
@@ -554,6 +581,32 @@ code {
   letter-spacing: -0.4px;
 }
 
+/* Special handling for long model names in first column */
+.interactive-table td:first-child strong {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+}
+
+.interactive-table td:first-child {
+  font-size: 0.8rem;
+  letter-spacing: -0.1px;
+}
+
+/* Specific styling for very long model names */
+.interactive-table td.long-model-name {
+  font-size: 0.75rem !important;
+  letter-spacing: -0.3px;
+  padding: 0.7rem 0.8rem;
+  word-spacing: -1px;
+}
+
+.interactive-table td.long-model-name strong {
+  font-size: 0.75rem !important;
+  letter-spacing: -0.4px;
+  font-weight: 600;
+}
+
 /* Ultra-compact table style for mobile */
 @media (max-width: 600px) {
   .interactive-table {
@@ -596,7 +649,29 @@ code {
   .interactive-table td:first-child {
     min-width: 80px;
     max-width: 100px;
+    font-size: 0.65rem;
+    padding-left: 0.4rem;
+  }
+  
+  .interactive-table td:first-child {
     font-size: 0.6rem;
+    letter-spacing: -0.3px;
+  }
+  
+  .interactive-table td:first-child strong {
+    font-size: 0.6rem;
+    letter-spacing: -0.4px;
+  }
+  
+  .interactive-table td.long-model-name {
+    font-size: 0.55rem !important;
+    letter-spacing: -0.5px;
+    padding: 0.3rem 0.3rem;
+  }
+  
+  .interactive-table td.long-model-name strong {
+    font-size: 0.55rem !important;
+    letter-spacing: -0.6px;
   }
 }
 
