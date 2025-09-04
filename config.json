@@ -1,0 +1,51 @@
+{
+  "paper": {
+    "title": "OmniEVA",
+    "subtitle": "Omni-modal Evaluation Assistant for Advanced AI Assessment",
+    "authors": [
+      {
+        "name": "Author Name",
+        "affiliation": "Institution 1",
+        "affiliationIndex": 1
+      },
+      {
+        "name": "Author Name",
+        "affiliation": "Institution 2", 
+        "affiliationIndex": 2
+      }
+    ],
+    "links": {
+      "paper": "#",
+      "code": "#",
+      "dataset": "#"
+    }
+  },
+  "styling": {
+    "primaryColor": "#667eea",
+    "secondaryColor": "#764ba2",
+    "textColor": "#1e293b",
+    "backgroundColor": "#f8fafc"
+  },
+  "content": {
+    "abstract": "Your abstract content here...",
+    "introduction": "Your introduction content here...",
+    "showVideoDemo": true,
+    "showTableResults": true
+  },
+  "media": {
+    "figures": [
+      {
+        "src": "assets/figure1.png",
+        "alt": "Experimental Figure 1",
+        "caption": "Multi-modal evaluation performance across different tasks"
+      }
+    ],
+    "videos": [
+      {
+        "src": "assets/demo.mp4",
+        "type": "video/mp4",
+        "caption": "Real-time multi-modal evaluation demonstration"
+      }
+    ]
+  }
+}

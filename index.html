@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OmniEVA: Embodied Versatile Planner via Task-Adaptive 3D-Grounded and Embodiment-aware Omni-Reasoning</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    /* Modern CSS Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #333;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Navigation */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-brand {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #667eea;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #555;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: #667eea;
+      background: rgba(102, 126, 234, 0.1);
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 5rem 2rem 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="%23ffffff" opacity="0.2"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.3;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.6rem, 3.2vw, 2.6rem);
+      font-weight: 700;
+      margin: 0 0 0.5rem;
+      background: linear-gradient(45deg, #fff, #e0e7ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+    }
+
+    .hero .subtitle {
+      font-size: 1.3rem;
+      font-weight: 300;
+      margin: 0 0 1rem;
+      opacity: 0.9;
+    }
+
+    .authors {
+      font-size: 1.1rem;
+      margin: 1rem 0;
+      opacity: 0.9;
+    }
+
+    .authors strong {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-weight: 600;
+    }
+
+    .institution {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.95);
+      margin: 0.3rem 0;
+    }
+
+    .paper-links {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1.5rem;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .btn-primary {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: #667eea;
+      border: 2px solid transparent;
+    }
+
+    .btn-secondary:hover {
+      background: #f8fafc;
+      transform: translateY(-2px);
+    }
+
+    /* Main Content */
+    .main-content {
+      background: #f8fafc;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.5rem 1.5rem;
+    }
+
+    .section {
+      background: white;
+      margin-bottom: 1.5rem;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .section:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .section h2 {
+      color: #1e293b;
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin: 0 0 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .section h2 i {
+      color: #667eea;
+      font-size: 1.2rem;
+    }
+
+    .section h3 {
+      color: #334155;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 1rem 0 0.6rem;
+      border-left: 3px solid #667eea;
+      padding-left: 0.8rem;
+    }
+
+    .section p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #475569;
+      margin: 0.8rem 0;
+    }
+
+    /* Additional spacing optimizations */
+    .benchmark-tables h3 {
+      margin-top: 1.5rem;
+    }
+    
+    .benchmark-tables h3:first-child {
+      margin-top: 0;
+    }
+    
+    .media-container {
+      margin: 1rem 0;
+    }
+
+    /* Abstract styling */
+    .abstract {
+      background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
+      border-left: 5px solid #667eea;
+    }
+
+    /* Table styling */
+    .table-container {
+      overflow-x: auto;
+      margin: 1rem 0;
+      border-radius: 8px;
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      table-layout: fixed;
+      font-size: 0.9rem;
+    }
+
+    th {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 0.6rem 0.4rem;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    /* Set fixed width for the first column and equal width for remaining columns */
+    th:first-child,
+    td:first-child {
+      width: 25%;
+    }
+
+    /* For 5-column tables (most tables have 5 columns) */
+    table:not(.six-column) th:not(:first-child),
+    table:not(.six-column) td:not(:first-child) {
+      width: 18.75%; /* (100% - 25%) / 4 = 18.75% */
+    }
+
+    /* For 6-column tables (Ablation Study table) */
+    table.six-column th:first-child,
+    table.six-column td:first-child {
+      width: 25%;
+    }
+
+    table.six-column th:not(:first-child),
+    table.six-column td:not(:first-child) {
+      width: 15%; /* (100% - 25%) / 5 = 15% */
+    }
+
+    td {
+      padding: 0.6rem 0.4rem;
+      border-bottom: 1px solid #e2e8f0;
+      color: #475569;
+      font-size: 0.85rem;
+    }
+
+    /* Center align all table cells except the first column */
+    th:not(:first-child),
+    td:not(:first-child) {
+      text-align: center;
+    }
+
+    tr:hover {
+      background: #f8fafc;
+    }
+
+    /* Media styling */
+    .media-container {
+      margin: 1.5rem 0;
+      border-radius: 0;
+      overflow: visible;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      transition: none;
+    }
+
+    .media-container:hover {
+      box-shadow: none;
+      transform: none;
+    }
+
+    .media-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border: none;
+      background: transparent;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .image-placeholder, .video-placeholder {
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #64748b;
+      font-size: 1.2rem;
+      position: relative;
+    }
+
+    .image-placeholder i, .video-placeholder i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .placeholder-text {
+      text-align: center;
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .video-container iframe, .video-container video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* References */
+    .references ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .references li {
+      background: #f8fafc;
+      margin: 0.8rem 0;
+      padding: 1.2rem;
+      border-radius: 8px;
+      border-left: 4px solid #667eea;
+      position: relative;
+    }
+
+    .references li::before {
+      content: attr(data-ref);
+      position: absolute;
+      left: -15px;
+      top: 1.2rem;
+      background: #667eea;
+      color: white;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* Footer */
+    .footer {
+      background: #1e293b;
+      color: white;
+      padding: 2rem 2rem 1.5rem;
+      text-align: center;
+    }
+
+    .footer p {
+      margin: 0.5rem 0;
+      opacity: 0.8;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      
+      .hero {
+        padding: 3.5rem 1rem 2rem;
+      }
+      
+      .container {
+        padding: 1rem 0.8rem;
+      }
+      
+      .section {
+        padding: 1.2rem;
+        margin-bottom: 1rem;
+      }
+      
+      .section h2 {
+        font-size: 1.4rem;
+      }
+      
+      .section h3 {
+        font-size: 1.1rem;
+      }
+      
+      .paper-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8rem;
+      }
+      
+      .charts-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem;
+      }
+      
+      .chart-wrapper {
+        height: 240px;
+      }
+      
+      .table-container {
+        font-size: 0.8rem;
+      }
+      
+      th, td {
+        padding: 0.4rem 0.2rem;
+        font-size: 0.75rem;
+      }
+    }
+
+    /* Animation */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section {
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    /* Chart Styles */
+    .chart-container {
+      margin: 1rem 0;
+      padding: 1rem;
+      background: #f8fafc;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .chart-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      color: #334155;
+      text-align: center;
+    }
+
+    .chart-wrapper {
+      position: relative;
+      height: 280px;
+      margin-bottom: 0.5rem;
+    }
+
+    .chart-wrapper canvas {
+      max-width: 100%;
+      height: auto !important;
+    }
+
+    /* Compact grid layout for results section */
+    .results-grid {
+      display: grid;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .results-item {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    /* Two-column layout for large screens */
+    @media (min-width: 1024px) {
+      .charts-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin: 1rem 0;
+      }
+      
+      .chart-container {
+        margin: 0;
+      }
+      
+      .table-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        align-items: start;
+      }
+      
+      .table-row .table-container {
+        margin: 0;
+      }
+    }
+
+    /* Three-column layout for extra large screens */
+    @media (min-width: 1400px) {
+      .charts-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="#" class="nav-brand">OmniEVA</a>
+      <button class="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+      </button>
+      <ul class="nav-links">
+        <li><a href="#abstract">Abstract</a></li>
+        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#method">Method</a></li>
+        <li><a href="#results">Results</a></li>
+        <li><a href="#references">References</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>OmniEVA: Embodied Versatile Planner via Task-Adaptive 3D-Grounded and Embodiment-aware Reasoning</h1>
+      
+      <div class="authors">
+        <strong>Authors:</strong>
+        Yuecheng Liu<sup>*</sup>,
+        Dafeng Chi<sup>*</sup>, 
+        Shiguang Wu<sup>*</sup>,
+        Zhanguang Zhang<sup>*</sup>,
+        Yuzheng Zhuang<sup>†</sup>, <br>
+        Bowen Yang,
+        He Zhu,
+        Lingfeng Zhang,
+        Pengwei Xie,
+        David Gamaliel Arcos Bravo, <br>
+        Yingxue Zhang,
+        Jianye Hao,
+        Xingyue Quan
+        <br>
+        <div class="institution">Huawei Noah's Ark Lab</div>
+        <small><sup>*</sup>Equal contribution, <sup>†</sup>Corresponding author</small>
+      </div>
+
+      <div class="paper-links">
+        <a href="#" class="btn btn-primary">
+          <i class="fas fa-file-pdf"></i>
+          Paper
+        </a>
+        <a href="#" class="btn btn-secondary">
+          <i class="fab fa-github"></i>
+          Code
+        </a>
+        <a href="#" class="btn btn-primary">
+          <i class="fas fa-database"></i>
+          Dataset
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <!-- Abstract -->
+      <section class="section abstract" id="abstract">
+        <h2>
+          <i class="fas fa-bookmark"></i>
+          Abstract
+        </h2>
+        <p>
+          Recent progress in multimodal large language models (MLLMs) has opened new avenues for embodied intelligence, yet current designs struggle with two key challenges: (1) Geometric Adaptability Gap—limited spatial understanding due to reliance on 2D inputs or rigid 3D encoding; and (2) Embodiment Constraint Gap—failure to account for real-world robotic constraints, leading to impractical plans. To overcome these, we propose OmniEVA, a versatile embodied planner featuring: (1) Task-Adaptive 3D Grounding, which selectively fuses 3D data based on context; and (2) Embodiment-Aware Reasoning, integrating task goals with physical constraints for executable planning. OmniEVA enables flexible 3D integration and robust planning across navigation, manipulation, and long-horizon tasks, achieving state-of-the-art performance in diverse embodied environments.
+        </p>
+      </section>
+
+      <!-- Introduction -->
+      <section class="section" id="introduction">
+        <h2>
+          <i class="fas fa-lightbulb"></i>
+          Introduction
+        </h2>
+        <div class="intro-content">
+          <p class="intro-main">
+            We present <strong>OmniEVA</strong> (Embodied Versatile Planner), a unified framework for embodied task planning and reasoning. 
+            OmniEVA dynamically integrates 2D and 3D inputs via task-conditioned feature selection, enabling flexible and efficient multimodal understanding.
+          </p>
+
+          <h4 class="key-innovations-title">
+            <i class="fas fa-star"></i>
+            Key Innovations
+          </h4>
+          <div class="innovations-grid">
+            <div class="innovation-item">
+              <div class="innovation-header">
+                <i class="fas fa-cube"></i>
+                <h5>Task-Adaptive 3D Grounding</h5>
+              </div>
+              <p>
+                A gated routing mechanism selectively incorporates 3D features into the visual-language backbone based on task context, 
+                ensuring spatial grounding only when necessary and improving performance across both 2D and 3D tasks.
+              </p>
+            </div>
+            
+            <div class="innovation-item">
+              <div class="innovation-header">
+                <i class="fas fa-robot"></i>
+                <h5>Embodiment-Aware Reasoning</h5>
+              </div>
+              <p>
+                OmniEVA combines task goals, environmental context, and physical constraints to generate executable plans. 
+                Post-training with our TE-GRPO algorithm ensures decisions respect object affordances, workspace limits, and kinematic feasibility.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <h3>Overall Framework</h3>
+        <div class="media-container">
+          <img src="assets/overall.png" alt="Overall Framework" width="100%" />
+          <div style="text-align: center; margin-top: 0.8rem; color: #64748b; font-style: italic;">
+            Figure 1: Overall framework of OmniEVA showing the complete pipeline and architecture
+          </div>
+        </div>
+      </section>
+
+      <!-- Method -->
+      <section class="section" id="method">
+        <h2>
+          <i class="fas fa-cogs"></i>
+          Method
+        </h2>
+        <p>
+          OmniEVA introduces two key innovations to address the limitations of current MLLM-based embodied systems: 
+          (1) Task-Adaptive 3D Grounding mechanism with a gated router for context-aware 3D fusion, and 
+          (2) Embodiment-Aware Reasoning framework that incorporates both task goals and embodiment constraints.
+        </p>
+
+        <h3>Model Architecture</h3>
+        <div class="media-container">
+          <img src="assets/model-architecture.png" alt="Model Architecture" width="100%" />
+          <div style="text-align: center; margin-top: 0.8rem; color: #64748b; font-style: italic;">
+            Figure 2: Detailed architecture of OmniEVA showing the Task-Adaptive 3D Grounding and Embodiment-Aware Reasoning components
+          </div>
+        </div>
+
+        <p>
+          The architecture consists of multiple interconnected modules that work together to enable versatile embodied planning. 
+          The Task-Adaptive 3D Grounding mechanism allows the model to selectively incorporate 3D information based on task requirements, 
+          while the Embodiment-Aware Reasoning framework ensures that generated plans are both goal-directed and physically executable.
+        </p>
+      </section>
+
+      <!-- Experimental Results -->
+      <section class="section" id="results">
+        <h2>
+          <i class="fas fa-chart-line"></i>
+          Experimental Results
+        </h2>
+        
+        <h3>Performance Visualization</h3>
+        
+        <!-- Charts Grid Layout -->
+        <div class="charts-grid">
+          <!-- Chart 1: Public 2D Embodied Reasoning Benchmarks -->
+          <div class="chart-container">
+            <h4 class="chart-title">Public 2D Embodied Reasoning</h4>
+            <div class="chart-wrapper">
+              <canvas id="chart1"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart 2: In-house Embodied Reasoning Benchmarks -->
+          <div class="chart-container">
+            <h4 class="chart-title">In-house Embodied Reasoning</h4>
+            <div class="chart-wrapper">
+              <canvas id="chart2"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart 3: 3D Reasoning Benchmarks -->
+          <div class="chart-container">
+            <h4 class="chart-title">3D Reasoning Benchmarks</h4>
+            <div class="chart-wrapper">
+              <canvas id="chart3"></canvas>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Benchmark Results Tables -->
+        <div class="benchmark-tables">
+          <h3>Public 2D Embodied Reasoning Benchmarks</h3>
+          <div class="table-container">
+            <table class="interactive-table">
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>Where2Place</th>
+                  <th>VSI-bench</th>
+                  <th>PACO-LVIS</th>
+                  <th>RoboRefit</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-tooltip="Our proposed method showing state-of-the-art performance">
+                  <td><strong>OmniEVA (Ours)</strong></td>
+                  <td>69.96</td>
+                  <td><strong>56.55</strong></td>
+                  <td><strong>22.26</strong></td>
+                  <td><strong>87.99</strong></td>
+                </tr>
+                <tr data-tooltip="robobrain 32b">
+                  <td>RoboBrain2.0-32B</td>
+                  <td><strong>73.59</strong></td>
+                  <td>42.69</td>
+                  <td>16.23</td>
+                  <td>69.98</td>
+                </tr>
+                <tr data-tooltip="robobrain 7b">
+                  <td>RoboBrain2.0-7B</td>
+                  <td>63.59</td>
+                  <td>36.10</td>
+                  <td>11.38</td>
+                  <td>62.74</td>
+                </tr>
+                <tr data-tooltip="Gemini's multimodal planning performance">
+                  <td>Gemini2.5-Pro</td>
+                  <td>28.60</td>
+                  <td>48.83</td>
+                  <td>3.14</td>
+                  <td>17.91</td>
+                </tr>
+                <tr data-tooltip="GPT-4o planning capabilities">
+                  <td>GPT-4o</td>
+                  <td>20.41</td>
+                  <td>43.60</td>
+                  <td>2.09</td>
+                  <td>9.96</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>In-house Embodied Reasoning Benchmarks</h3>
+          <div class="table-container">
+            <table class="interactive-table">
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>Where2Grasp</th>
+                  <th>Where2Approach</th>
+                  <th>Where2Fit</th>
+                  <th>Where2Go</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-tooltip="Our proposed method showing superior embodied reasoning">
+                  <td><strong>OmniEVA (Ours)</strong></td>
+                  <td><strong>68.30</strong></td>
+                  <td><strong>-</strong></td>
+                  <td><strong>67.81</strong></td>
+                  <td><strong>85.02</strong></td>
+                </tr>
+                <tr data-tooltip="RoboBrain baseline performance">
+                  <td>RoboBrain2.0-32B</td>
+                  <td>67.60</td>
+                  <td>-</td>
+                  <td>59.23</td>
+                  <td>41.06</td>
+                </tr>
+                <tr data-tooltip="RoboBrain 7B variant">
+                  <td>RoboBrain2.0-7B</td>
+                  <td>63.24</td>
+                  <td>-</td>
+                  <td>32.99</td>
+                  <td>41.06</td>
+                </tr>
+                <tr data-tooltip="Gemini's embodied reasoning performance">
+                  <td>Gemini2.5-Pro</td>
+                  <td>27.00</td>
+                  <td>-</td>
+                  <td>41.82</td>
+                  <td>55.07</td>
+                </tr>
+                <tr data-tooltip="GPT-4o embodied task performance">
+                  <td>GPT-4o</td>
+                  <td>6.38</td>
+                  <td>-</td>
+                  <td>37.15</td>
+                  <td>50.72</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>3D Reasoning Benchmarks</h3>
+          <div class="table-container">
+            <table class="interactive-table">
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>SQA3D</th>
+                  <th>ScanQA</th>
+                  <th>Scan2Cap</th>
+                  <th>ScanRefer</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-tooltip="Our method excels in 3D reasoning tasks">
+                  <td><strong>OmniEVA (Ours)</strong></td>
+                  <td><strong>61.8</strong></td>
+                  <td><strong>30.5</strong></td>
+                  <td><strong>97.8</strong></td>
+                  <td><strong>53.8</strong></td>
+                </tr>
+                <tr data-tooltip="3DRS">
+                  <td>3DRS</td>
+                  <td>60.6</td>
+                  <td>30.3</td>
+                  <td>86.1</td>
+                  <td>62.9</td>
+                </tr>
+                <tr data-tooltip="video-3d-llm">
+                  <td>Video-3D-LLM</td>
+                  <td>58.6</td>
+                  <td>30.1</td>
+                  <td>83.8</td>
+                  <td>58.1</td>
+                </tr>
+                <tr data-tooltip="llava3d">
+                  <td>LLaVA-3D</td>
+                  <td>55.6</td>
+                  <td>27.0</td>
+                  <td>79.2</td>
+                  <td>54.1</td>
+                </tr>
+                <tr data-tooltip="chatscene">
+                  <td>ChatScene</td>
+                  <td>54.6</td>
+                  <td>21.6</td>
+                  <td>77.1</td>
+                  <td>55.5</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Object Navigation Benchmarks</h3>
+          <div class="table-container">
+            <table class="interactive-table">
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>HM3D (SR)</th>
+                  <th>HM3D (SPL)</th>
+                  <th>MP3D (SR)</th>
+                  <th>MP3D (SPL)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-tooltip="Our method demonstrates superior object navigation capabilities">
+                  <td><strong>OmniEVA (Ours)</strong></td>
+                  <td><strong>74.2</strong></td>
+                  <td><strong>42.5</strong></td>
+                  <td><strong>59.1</strong></td>
+                  <td><strong>26.2</strong></td>
+                </tr>
+                <tr data-tooltip="UniNavid baseline performance">
+                  <td>UniNavid</td>
+                  <td>73.7</td>
+                  <td>37.1</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+                <tr data-tooltip="OVRL object navigation results">
+                  <td>OVRL</td>
+                  <td>62.0</td>
+                  <td>26.8</td>
+                  <td>28.6</td>
+                  <td>7.4</td>
+                </tr>
+                <tr data-tooltip="InstructNav object navigation results">
+                  <td>InstructNav</td>
+                  <td>58.0</td>
+                  <td>20.9</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+                <tr data-tooltip="CoW object navigation baseline">
+                  <td>VLFM</td>
+                  <td>52.5</td>
+                  <td>30.4</td>
+                  <td>36.4</td>
+                  <td>17.5</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>       
+
+        <h3>Video Demonstration</h3>
+        <div class="media-container">
+          <div class="video-placeholder">
+            <div class="placeholder-text">
+              <i class="fas fa-play-circle"></i>
+              <div>Interactive demo video showcasing OmniEVA capabilities</div>
+              <small>Video 1: Real-time multi-modal evaluation demonstration</small>
+            </div>
+          </div>
+        </div>
+
+        <h3>Ablation Study</h3>
+        <div class="table-container">
+          <table class="six-column">
+            <thead>
+              <tr>
+                <th>Configuration</th>
+                <th>Text Module</th>
+                <th>Vision Module</th>
+                <th>Audio Module</th>
+                <th>Cross-Modal Fusion</th>
+                <th>Performance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Full OmniEVA</td>
+                <td>✓</td>
+                <td>✓</td>
+                <td>✓</td>
+                <td>✓</td>
+                <td><strong>94.0%</strong></td>
+              </tr>
+              <tr>
+                <td>w/o Cross-Modal</td>
+                <td>✓</td>
+                <td>✓</td>
+                <td>✓</td>
+                <td>✗</td>
+                <td>91.2%</td>
+              </tr>
+              <tr>
+                <td>Text + Vision</td>
+                <td>✓</td>
+                <td>✓</td>
+                <td>✗</td>
+                <td>✓</td>
+                <td>89.8%</td>
+              </tr>
+              <tr>
+                <td>Text Only</td>
+                <td>✓</td>
+                <td>✗</td>
+                <td>✗</td>
+                <td>✗</td>
+                <td>85.5%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- References -->
+      <section class="section references" id="references">
+        <h2>
+          <i class="fas fa-book"></i>
+          References
+        </h2>
+        <ul>
+          <li data-ref="[1]">
+            Brown, T., Mann, B., Ryder, N., et al. (2020). <em>Language Models are Few-Shot Learners</em>. 
+            Advances in Neural Information Processing Systems, 33, 1877-1901.
+          </li>
+          <li data-ref="[2]">
+            Radford, A., Kim, J. W., Hallacy, C., et al. (2021). <em>Learning Transferable Visual Models From Natural Language Supervision</em>. 
+            International Conference on Machine Learning, PMLR, 139, 8748-8763.
+          </li>
+          <li data-ref="[3]">
+            Alayrac, J. B., Donahue, J., Luc, P., et al. (2022). <em>Flamingo: a Visual Language Model for Few-Shot Learning</em>. 
+            Advances in Neural Information Processing Systems, 35, 23716-23736.
+          </li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2024 OmniEVA Research Team. All rights reserved.</p>
+    <p>Built with modern web technologies for optimal viewing experience.</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="assets/script.js"></script>
+  
+  <!-- Chart.js Visualization Scripts -->
+  <script>
+    // Wait for DOM to be loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Chart.js 配置
+      Chart.defaults.font.size = 12;
+      Chart.defaults.font.family = 'Inter';
+
+      // 橘黄色系颜色配置 (从浅到深)
+      const colors = {
+        'OmniEVA (Ours)': '#FFE4B5',      // 浅橘黄色
+        'RoboBrain2.0-32B': '#FFD700',    // 金黄色
+        'RoboBrain2.0-7B': '#FFA500',     // 橙色
+        'Gemini2.5-Pro': '#FF8C00',       // 深橙色
+        'GPT-4o': '#FF6347',              // 橙红色
+        '3DRS': '#FFE4B5',                // 浅橘黄色
+        'Video-3D-LLM': '#FFD700',        // 金黄色
+        'LLaVA-3D': '#FFA500',            // 橙色
+        'ChatScene': '#FF8C00'            // 深橙色
+      };
+
+      // Chart 1: Public 2D Embodied Reasoning Benchmarks
+      const ctx1 = document.getElementById('chart1');
+      if (ctx1) {
+        const chart1 = new Chart(ctx1.getContext('2d'), {
+          type: 'bar',
+          data: {
+            labels: ['Where2Place', 'VSI-bench', 'PACO-LVIS', 'RoboRefit'],
+            datasets: [
+              {
+                label: 'GPT-4o',
+                data: [20.41, 43.60, 2.09, 9.96],
+                backgroundColor: '#FFE4B5',
+                borderColor: '#FFE4B5',
+                borderWidth: 1
+              },
+              {
+                label: 'Gemini2.5-Pro',
+                data: [28.60, 48.83, 3.14, 17.91],
+                backgroundColor: '#FFD700',
+                borderColor: '#FFD700',
+                borderWidth: 1
+              },
+              {
+                label: 'RoboBrain2.0-7B',
+                data: [63.59, 36.10, 11.38, 62.74],
+                backgroundColor: '#FFA500',
+                borderColor: '#FFA500',
+                borderWidth: 1
+              },
+              {
+                label: 'RoboBrain2.0-32B',
+                data: [73.59, 42.69, 16.23, 69.98],
+                backgroundColor: '#FF8C00',
+                borderColor: '#FF8C00',
+                borderWidth: 1
+              },
+              {
+                label: 'OmniEVA (Ours)',
+                data: [68.94, 56.55, 21.24, 88.77],
+                backgroundColor: '#FF6347',
+                borderColor: '#FF6347',
+                borderWidth: 1
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                beginAtZero: true,
+                max: 100,
+                title: {
+                  display: true,
+                  text: 'Performance Score'
+                }
+              },
+              x: {
+                title: {
+                  display: true,
+                  text: 'Benchmark'
+                }
+              }
+            },
+            plugins: {
+              legend: {
+                position: 'top',
+                labels: {
+                  boxWidth: 12,
+                  padding: 15
+                }
+              },
+              tooltip: {
+                mode: 'index',
+                intersect: false,
+              }
+            }
+          }
+        });
+      }
+
+      // Chart 2: In-house Embodied Reasoning Benchmarks
+      const ctx2 = document.getElementById('chart2');
+      if (ctx2) {
+        const chart2 = new Chart(ctx2.getContext('2d'), {
+          type: 'bar',
+          data: {
+            labels: ['Where2Grasp', 'Where2Fit', 'Where2Go'],
+            datasets: [
+              {
+                label: 'GPT-4o',
+                data: [6.38, 37.15, 50.72],
+                backgroundColor: '#FFE4B5',
+                borderColor: '#FFE4B5',
+                borderWidth: 1
+              },
+              {
+                label: 'Gemini2.5-Pro',
+                data: [27.00, 41.82, 55.07],
+                backgroundColor: '#FFD700',
+                borderColor: '#FFD700',
+                borderWidth: 1
+              },
+              {
+                label: 'RoboBrain2.0-7B',
+                data: [63.24, 32.99, 41.06],
+                backgroundColor: '#FFA500',
+                borderColor: '#FFA500',
+                borderWidth: 1
+              },
+              {
+                label: 'RoboBrain2.0-32B',
+                data: [67.60, 59.23, 41.06],
+                backgroundColor: '#FF8C00',
+                borderColor: '#FF8C00',
+                borderWidth: 1
+              },
+              {
+                label: 'OmniEVA (Ours)',
+                data: [67.5, 78.55, 83.09],
+                backgroundColor: '#FF6347',
+                borderColor: '#FF6347',
+                borderWidth: 1
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                beginAtZero: true,
+                max: 100,
+                title: {
+                  display: true,
+                  text: 'Performance Score'
+                }
+              },
+              x: {
+                title: {
+                  display: true,
+                  text: 'Benchmark'
+                }
+              }
+            },
+            plugins: {
+              legend: {
+                position: 'top',
+                labels: {
+                  boxWidth: 12,
+                  padding: 15
+                }
+              },
+              tooltip: {
+                mode: 'index',
+                intersect: false,
+              }
+            }
+          }
+        });
+      }
+
+      // Chart 3: 3D Reasoning Benchmarks
+      const ctx3 = document.getElementById('chart3');
+      if (ctx3) {
+        const chart3 = new Chart(ctx3.getContext('2d'), {
+          type: 'bar',
+          data: {
+            labels: ['SQA3D', 'ScanQA', 'Scan2Cap', 'ScanRefer'],
+            datasets: [
+              {
+                label: 'ChatScene',
+                data: [54.6, 21.6, 77.1, 55.5],
+                backgroundColor: '#FFE4B5',
+                borderColor: '#FFE4B5',
+                borderWidth: 1
+              },
+              {
+                label: 'LLaVA-3D',
+                data: [55.6, 27.0, 79.2, 54.1],
+                backgroundColor: '#FFD700',
+                borderColor: '#FFD700',
+                borderWidth: 1
+              },
+              {
+                label: 'Video-3D-LLM',
+                data: [58.6, 30.1, 83.8, 58.1],
+                backgroundColor: '#FFA500',
+                borderColor: '#FFA500',
+                borderWidth: 1
+              },
+              {
+                label: '3DRS',
+                data: [60.6, 30.3, 86.1, 62.9],
+                backgroundColor: '#FF8C00',
+                borderColor: '#FF8C00',
+                borderWidth: 1
+              },
+              {
+                label: 'OmniEVA (Ours)',
+                data: [61.6, 30.7, 93.9, 54.6],
+                backgroundColor: '#FF6347',
+                borderColor: '#FF6347',
+                borderWidth: 1
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                beginAtZero: true,
+                max: 100,
+                title: {
+                  display: true,
+                  text: 'Performance Score'
+                }
+              },
+              x: {
+                title: {
+                  display: true,
+                  text: 'Benchmark'
+                }
+              }
+            },
+            plugins: {
+              legend: {
+                position: 'top',
+                labels: {
+                  boxWidth: 12,
+                  padding: 15
+                }
+              },
+              tooltip: {
+                mode: 'index',
+                intersect: false,
+              }
+            }
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

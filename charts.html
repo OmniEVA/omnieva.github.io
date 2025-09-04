@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OmniEVA 实验结果可视化</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .chart-container {
+            margin: 40px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+        .chart-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+            text-align: center;
+        }
+        .chart-wrapper {
+            position: relative;
+            height: 400px;
+            margin-bottom: 20px;
+        }
+        canvas {
+            max-width: 100%;
+            height: auto !important;
+        }
+        .legend-container {
+            margin-top: 10px;
+            text-align: center;
+        }
+        .legend-item {
+            display: inline-block;
+            margin: 0 15px;
+            font-size: 14px;
+        }
+        .legend-color {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>OmniEVA 实验结果对比分析</h1>
+        
+        <!-- Chart 1: Public 2D Embodied Reasoning Benchmarks -->
+        <div class="chart-container">
+            <div class="chart-title">Public 2D Embodied Reasoning Benchmarks</div>
+            <div class="chart-wrapper">
+                <canvas id="chart1"></canvas>
+            </div>
+        </div>
+
+        <!-- Chart 2: In-house Embodied Reasoning Benchmarks -->
+        <div class="chart-container">
+            <div class="chart-title">In-house Embodied Reasoning Benchmarks</div>
+            <div class="chart-wrapper">
+                <canvas id="chart2"></canvas>
+            </div>
+        </div>
+
+        <!-- Chart 3: 3D Reasoning Benchmarks -->
+        <div class="chart-container">
+            <div class="chart-title">3D Reasoning Benchmarks</div>
+            <div class="chart-wrapper">
+                <canvas id="chart3"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart.js 配置
+        Chart.defaults.font.size = 12;
+        Chart.defaults.font.family = 'Arial';
+
+        // 颜色配置
+        const colors = {
+            'OmniEVA (Ours)': '#FF6B6B',
+            'RoboBrain2.0-32B': '#4ECDC4', 
+            'RoboBrain2.0-7B': '#45B7D1',
+            'Gemini2.5-Pro': '#96CEB4',
+            'GPT-4o': '#FECA57',
+            '3DRS': '#FF9FF3',
+            'Video-3D-LLM': '#54A0FF',
+            'LLaVA-3D': '#5F27CD',
+            'ChatScene': '#00D2D3'
+        };
+
+        // Chart 1: Public 2D Embodied Reasoning Benchmarks
+        const ctx1 = document.getElementById('chart1').getContext('2d');
+        const chart1 = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ['Where2Place', 'VSI-bench', 'PACO-LVIS', 'RoboRefit'],
+                datasets: [
+                    {
+                        label: 'OmniEVA (Ours)',
+                        data: [68.94, 56.55, 21.24, 88.77],
+                        backgroundColor: colors['OmniEVA (Ours)'],
+                        borderColor: colors['OmniEVA (Ours)'],
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'RoboBrain2.0-32B',
+                        data: [73.59, 42.69, 16.23, 69.98],
+                        backgroundColor: colors['RoboBrain2.0-32B'],
+                        borderColor: colors['RoboBrain2.0-32B'],
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'RoboBrain2.0-7B',
+                        data: [63.59, 36.10, 11.38, 62.74],
+                        backgroundColor: colors['RoboBrain2.0-7B'],
+                        borderColor: colors['RoboBrain2.0-7B'],
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Gemini2.5-Pro',
+                        data: [28.60, 48.83, 3.14, 17.91],
+                        backgroundColor: colors['Gemini2.5-Pro'],
+                        borderColor: colors['Gemini2.5-Pro'],
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'GPT-4o',
+                        data: [20.41, 43.60, 2.09, 9.96],
+                        backgroundColor: colors['GPT-4o'],
+                        borderColor: colors['GPT-4o'],
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: '性能分数'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: '测试基准'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            boxWidth: 12,
+                            padding: 15
+                        }
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                    }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    axis: 'x',
+                    intersect: false
+                }
+            }
+        });
+
+        // Chart 2: In-house Embodied Reasoning Benchmarks
+        const ctx2 = document.getElementById('chart2').getContext('2d');
+        const chart2 = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Where2Grasp', 'Where2Fit', 'Where2Go'],
+                datasets: [
+                    {
+                        label: 'OmniEVA (Ours)',
+                        data: [67.5, 78.55, 83.09],
+                        backgroundColor: colors['OmniEVA (Ours)'],
+                        borderColor: colors['OmniEVA (Ours)'],
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'RoboBrain2.0-32B',
+                        data: [67.60, 59.23, 41.06],
+                        backgroundColor: colors['RoboBrain2.0-32B'],
+                        borderColor: colors['RoboBrain2.0-32B'],
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'RoboBrain2.0-7B',
+                        data: [63.24, 32.99, 41.06],
+                        backgroundColor: colors['RoboBrain2.0-7B'],
+                        borderColor: colors['RoboBrain2.0-7B'],
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Gemini2.5-Pro',
+                        data: [27.00, 41.82, 55.07],
+                        backgroundColor: colors['Gemini2.5-Pro'],
+                        borderColor: colors['Gemini2.5-Pro'],
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'GPT-4o',
+                        data: [6.38, 37.15, 50.72],
+                        backgroundColor: colors['GPT-4o'],
+                        borderColor: colors['GPT-4o'],
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: '性能分数'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: '测试基准'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            boxWidth: 12,
+                            padding: 15
+                        }
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                    }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    axis: 'x',
+                    intersect: false
+                }
+            }
+        });
+
+        // Chart 3: 3D Reasoning Benchmarks
+        const ctx3 = document.getElementById('chart3').getContext('2d');
+        const chart3 = new Chart(ctx3, {
+            type: 'bar',
+            data: {
+                labels: ['SQA3D', 'ScanQA', 'Scan2Cap', 'ScanRefer'],
+                datasets: [
+                    {
+                        label: 'OmniEVA (Ours)',
+                        data: [61.6, 30.7, 93.9, 54.6],
+                        backgroundColor: colors['OmniEVA (Ours)'],
+                        borderColor: colors['OmniEVA (Ours)'],
+                        borderWidth: 1
+                    },
+                    {
+                        label: '3DRS',
+                        data: [60.6, 30.3, 86.1, 62.9],
+                        backgroundColor: colors['3DRS'],
+                        borderColor: colors['3DRS'],
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Video-3D-LLM',
+                        data: [58.6, 30.1, 83.8, 58.1],
+                        backgroundColor: colors['Video-3D-LLM'],
+                        borderColor: colors['Video-3D-LLM'],
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'LLaVA-3D',
+                        data: [55.6, 27.0, 79.2, 54.1],
+                        backgroundColor: colors['LLaVA-3D'],
+                        borderColor: colors['LLaVA-3D'],
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'ChatScene',
+                        data: [54.6, 21.6, 77.1, 55.5],
+                        backgroundColor: colors['ChatScene'],
+                        borderColor: colors['ChatScene'],
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: '性能分数'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: '测试基准'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            boxWidth: 12,
+                            padding: 15
+                        }
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                    }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    axis: 'x',
+                    intersect: false
+                }
+            }
+        });
+    </script>
+</body>
+</html>
