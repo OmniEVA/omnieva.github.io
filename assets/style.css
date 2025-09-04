@@ -316,20 +316,56 @@ code {
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
   border: 1px solid #e2e8f0;
+  table-layout: fixed;
+}
+
+/* Special handling for the first column (Method) */
+.interactive-table th:first-child,
+.interactive-table td:first-child {
+  min-width: 140px;
+  max-width: 160px;
+  text-align: left;
+  padding-left: 1rem;
+}
+
+/* Responsive table adjustments */
+@media (max-width: 768px) {
+  .interactive-table th {
+    font-size: 0.7rem;
+    padding: 0.6rem 0.4rem;
+    min-width: 60px;
+    max-width: 90px;
+  }
+  
+  .interactive-table td {
+    font-size: 0.75rem;
+    padding: 0.6rem 0.4rem;
+  }
+  
+  .interactive-table th:first-child,
+  .interactive-table td:first-child {
+    min-width: 100px;
+    max-width: 120px;
+  }
 }
 
 .interactive-table th {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  padding: 1rem;
-  text-align: left;
+  padding: 0.8rem 0.6rem;
+  text-align: center;
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.82rem;
   border-bottom: 2px solid #5a67d8;
   cursor: pointer;
   user-select: none;
   position: relative;
   transition: all 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 80px;
+  max-width: 120px;
 }
 
 .interactive-table th:hover {
@@ -361,10 +397,12 @@ code {
 }
 
 .interactive-table td {
-  padding: 0.8rem 1rem;
+  padding: 0.7rem 0.6rem;
   border-bottom: 1px solid #f1f5f9;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  text-align: center;
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
 .interactive-table tbody tr {
@@ -474,6 +512,92 @@ code {
   0% { transform: scale(1); }
   50% { transform: scale(1.2); }
   100% { transform: scale(1); }
+}
+
+/* Enhanced table header tooltip */
+.interactive-table th {
+  position: relative;
+}
+
+.interactive-table th[title]:hover::before {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  z-index: 1000;
+  margin-bottom: 5px;
+  pointer-events: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Specific styling for long benchmark names */
+.interactive-table th:nth-child(3), /* Where2Approach */
+.interactive-table th:nth-child(4), /* PACO-LVIS, Where2Fit, etc */
+.interactive-table th:nth-child(5)  /* RoboRefit, Where2Go, etc */ {
+  font-size: 0.75rem;
+  letter-spacing: -0.3px;
+  padding: 0.7rem 0.4rem;
+}
+
+/* Additional compression for very long names */
+.interactive-table th[title*="Where2Approach"],
+.interactive-table th[title*="PACO-LVIS"],
+.interactive-table th[title*="RoboRefit"] {
+  font-size: 0.7rem;
+  letter-spacing: -0.4px;
+}
+
+/* Ultra-compact table style for mobile */
+@media (max-width: 600px) {
+  .interactive-table {
+    font-size: 0.7rem;
+  }
+  
+  .interactive-table th,
+  .interactive-table td {
+    padding: 0.4rem 0.3rem;
+  }
+  
+  .interactive-table th {
+    font-size: 0.65rem;
+    line-height: 1.1;
+    letter-spacing: -0.3px;
+  }
+  
+  .interactive-table th:nth-child(3),
+  .interactive-table th:nth-child(4),
+  .interactive-table th:nth-child(5) {
+    font-size: 0.6rem;
+    letter-spacing: -0.4px;
+  }
+}
+
+/* Additional optimization for very narrow screens */
+@media (max-width: 480px) {
+  .interactive-table th {
+    font-size: 0.55rem;
+    padding: 0.3rem 0.2rem;
+    line-height: 1;
+  }
+  
+  .interactive-table td {
+    font-size: 0.6rem;
+    padding: 0.3rem 0.2rem;
+  }
+  
+  .interactive-table th:first-child,
+  .interactive-table td:first-child {
+    min-width: 80px;
+    max-width: 100px;
+    font-size: 0.6rem;
+  }
 }
 
 .sort-indicator-animate::after {

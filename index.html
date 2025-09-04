@@ -251,6 +251,67 @@
     .benchmark-tables h3:first-child {
       margin-top: 0;
     }
+
+    /* Two-column table grid layout */
+    .table-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin: 1.5rem 0;
+    }
+
+    .table-grid-item {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+    }
+
+    .table-grid-item h4 {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      margin: 0;
+      padding: 1rem 1rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-align: center;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .table-grid-item .table-container {
+      margin: 0;
+      box-shadow: none;
+      border-radius: 0 0 8px 8px;
+    }
+
+    /* Override table header styling for grid items - remove all border radius */
+    .table-grid-item table {
+      border-radius: 0;
+    }
+    
+    .table-grid-item table th {
+      border-radius: 0 !important;
+    }
+
+    .table-grid-item table th:first-child {
+      border-radius: 0 !important;
+    }
+
+    .table-grid-item table th:last-child {
+      border-radius: 0 !important;
+    }
+
+    .table-grid-item .table-container {
+      border-radius: 0;
+    }
+
+    /* Responsive grid layout */
+    @media (max-width: 1024px) {
+      .table-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+    }
     
     .media-container {
       margin: 1rem 0;
@@ -792,212 +853,226 @@
         
         <!-- Benchmark Results Tables -->
         <div class="benchmark-tables">
-          <h3>Public 2D Embodied Reasoning Benchmarks</h3>
-          <div class="table-container">
-            <table class="interactive-table">
-              <thead>
-                <tr>
-                  <th>Method</th>
-                  <th>Where2Place</th>
-                  <th>VSI-bench</th>
-                  <th>PACO-LVIS</th>
-                  <th>RoboRefit</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr data-tooltip="Our proposed method showing state-of-the-art performance">
-                  <td><strong>OmniEVA (Ours)</strong></td>
-                  <td>69.96</td>
-                  <td><strong>56.55</strong></td>
-                  <td><strong>22.26</strong></td>
-                  <td><strong>87.99</strong></td>
-                </tr>
-                <tr data-tooltip="robobrain 32b">
-                  <td>RoboBrain2.0-32B</td>
-                  <td><strong>73.59</strong></td>
-                  <td>42.69</td>
-                  <td>16.23</td>
-                  <td>69.98</td>
-                </tr>
-                <tr data-tooltip="robobrain 7b">
-                  <td>RoboBrain2.0-7B</td>
-                  <td>63.59</td>
-                  <td>36.10</td>
-                  <td>11.38</td>
-                  <td>62.74</td>
-                </tr>
-                <tr data-tooltip="Gemini's multimodal planning performance">
-                  <td>Gemini2.5-Pro</td>
-                  <td>28.60</td>
-                  <td>48.83</td>
-                  <td>3.14</td>
-                  <td>17.91</td>
-                </tr>
-                <tr data-tooltip="GPT-4o planning capabilities">
-                  <td>GPT-4o</td>
-                  <td>20.41</td>
-                  <td>43.60</td>
-                  <td>2.09</td>
-                  <td>9.96</td>
-                </tr>
-              </tbody>
-            </table>
+          <!-- First row: Public 2D and In-house Embodied Reasoning -->
+          <div class="table-grid">
+            <div class="table-grid-item">
+              <h4>Public 2D Embodied Reasoning Benchmarks</h4>
+              <div class="table-container">
+                <table class="interactive-table">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th title="Where2Place Benchmark">Where2Place</th>
+                      <th title="Visual Spatial Intelligence Benchmark">VSI-bench</th>
+                      <th title="PACO-LVIS Dataset">PACO-LVIS</th>
+                      <th title="RoboRefit Benchmark">RoboRefit</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-tooltip="Our proposed method showing state-of-the-art performance">
+                      <td><strong>OmniEVA (Ours)</strong></td>
+                      <td>69.96</td>
+                      <td><strong>56.55</strong></td>
+                      <td><strong>22.26</strong></td>
+                      <td><strong>87.99</strong></td>
+                    </tr>
+                    <tr data-tooltip="robobrain 32b">
+                      <td>RoboBrain2.0-32B</td>
+                      <td><strong>73.59</strong></td>
+                      <td>42.69</td>
+                      <td>16.23</td>
+                      <td>69.98</td>
+                    </tr>
+                    <tr data-tooltip="robobrain 7b">
+                      <td>RoboBrain2.0-7B</td>
+                      <td>63.59</td>
+                      <td>36.10</td>
+                      <td>11.38</td>
+                      <td>62.74</td>
+                    </tr>
+                    <tr data-tooltip="Gemini's multimodal planning performance">
+                      <td>Gemini2.5-Pro</td>
+                      <td>28.60</td>
+                      <td>48.83</td>
+                      <td>3.14</td>
+                      <td>17.91</td>
+                    </tr>
+                    <tr data-tooltip="GPT-4o planning capabilities">
+                      <td>GPT-4o</td>
+                      <td>20.41</td>
+                      <td>43.60</td>
+                      <td>2.09</td>
+                      <td>9.96</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="table-grid-item">
+              <h4>In-house Embodied Reasoning Benchmarks</h4>
+              <div class="table-container">
+                <table class="interactive-table">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th title="Where2Grasp Benchmark">Where2Grasp</th>
+                      <th title="Where2Approach Benchmark">Where2Approach</th>
+                      <th title="Where2Fit Benchmark">Where2Fit</th>
+                      <th title="Where2Go Benchmark">Where2Go</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-tooltip="Our proposed method showing superior embodied reasoning">
+                      <td><strong>OmniEVA (Ours)</strong></td>
+                      <td><strong>68.30</strong></td>
+                      <td><strong>-</strong></td>
+                      <td><strong>67.81</strong></td>
+                      <td><strong>85.02</strong></td>
+                    </tr>
+                    <tr data-tooltip="RoboBrain baseline performance">
+                      <td>RoboBrain2.0-32B</td>
+                      <td>67.60</td>
+                      <td>-</td>
+                      <td>59.23</td>
+                      <td>41.06</td>
+                    </tr>
+                    <tr data-tooltip="RoboBrain 7B variant">
+                      <td>RoboBrain2.0-7B</td>
+                      <td>63.24</td>
+                      <td>-</td>
+                      <td>32.99</td>
+                      <td>41.06</td>
+                    </tr>
+                    <tr data-tooltip="Gemini's embodied reasoning performance">
+                      <td>Gemini2.5-Pro</td>
+                      <td>27.00</td>
+                      <td>-</td>
+                      <td>41.82</td>
+                      <td>55.07</td>
+                    </tr>
+                    <tr data-tooltip="GPT-4o embodied task performance">
+                      <td>GPT-4o</td>
+                      <td>6.38</td>
+                      <td>-</td>
+                      <td>37.15</td>
+                      <td>50.72</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
 
-          <h3>In-house Embodied Reasoning Benchmarks</h3>
-          <div class="table-container">
-            <table class="interactive-table">
-              <thead>
-                <tr>
-                  <th>Method</th>
-                  <th>Where2Grasp</th>
-                  <th>Where2Approach</th>
-                  <th>Where2Fit</th>
-                  <th>Where2Go</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr data-tooltip="Our proposed method showing superior embodied reasoning">
-                  <td><strong>OmniEVA (Ours)</strong></td>
-                  <td><strong>68.30</strong></td>
-                  <td><strong>-</strong></td>
-                  <td><strong>67.81</strong></td>
-                  <td><strong>85.02</strong></td>
-                </tr>
-                <tr data-tooltip="RoboBrain baseline performance">
-                  <td>RoboBrain2.0-32B</td>
-                  <td>67.60</td>
-                  <td>-</td>
-                  <td>59.23</td>
-                  <td>41.06</td>
-                </tr>
-                <tr data-tooltip="RoboBrain 7B variant">
-                  <td>RoboBrain2.0-7B</td>
-                  <td>63.24</td>
-                  <td>-</td>
-                  <td>32.99</td>
-                  <td>41.06</td>
-                </tr>
-                <tr data-tooltip="Gemini's embodied reasoning performance">
-                  <td>Gemini2.5-Pro</td>
-                  <td>27.00</td>
-                  <td>-</td>
-                  <td>41.82</td>
-                  <td>55.07</td>
-                </tr>
-                <tr data-tooltip="GPT-4o embodied task performance">
-                  <td>GPT-4o</td>
-                  <td>6.38</td>
-                  <td>-</td>
-                  <td>37.15</td>
-                  <td>50.72</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <!-- Second row: 3D Reasoning and Object Navigation -->
+          <div class="table-grid">
+            <div class="table-grid-item">
+              <h4>3D Reasoning Benchmarks</h4>
+              <div class="table-container">
+                <table class="interactive-table">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th title="Spatial Question Answering 3D">SQA3D</th>
+                      <th title="Scan Question Answering">ScanQA</th>
+                      <th title="Scan to Caption">Scan2Cap</th>
+                      <th title="Scan Referring Expression">ScanRefer</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-tooltip="Our method excels in 3D reasoning tasks">
+                      <td><strong>OmniEVA (Ours)</strong></td>
+                      <td><strong>61.8</strong></td>
+                      <td><strong>30.5</strong></td>
+                      <td><strong>97.8</strong></td>
+                      <td><strong>53.8</strong></td>
+                    </tr>
+                    <tr data-tooltip="3DRS">
+                      <td>3DRS</td>
+                      <td>60.6</td>
+                      <td>30.3</td>
+                      <td>86.1</td>
+                      <td>62.9</td>
+                    </tr>
+                    <tr data-tooltip="video-3d-llm">
+                      <td>Video-3D-LLM</td>
+                      <td>58.6</td>
+                      <td>30.1</td>
+                      <td>83.8</td>
+                      <td>58.1</td>
+                    </tr>
+                    <tr data-tooltip="llava3d">
+                      <td>LLaVA-3D</td>
+                      <td>55.6</td>
+                      <td>27.0</td>
+                      <td>79.2</td>
+                      <td>54.1</td>
+                    </tr>
+                    <tr data-tooltip="chatscene">
+                      <td>ChatScene</td>
+                      <td>54.6</td>
+                      <td>21.6</td>
+                      <td>77.1</td>
+                      <td>55.5</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
 
-          <h3>3D Reasoning Benchmarks</h3>
-          <div class="table-container">
-            <table class="interactive-table">
-              <thead>
-                <tr>
-                  <th>Method</th>
-                  <th>SQA3D</th>
-                  <th>ScanQA</th>
-                  <th>Scan2Cap</th>
-                  <th>ScanRefer</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr data-tooltip="Our method excels in 3D reasoning tasks">
-                  <td><strong>OmniEVA (Ours)</strong></td>
-                  <td><strong>61.8</strong></td>
-                  <td><strong>30.5</strong></td>
-                  <td><strong>97.8</strong></td>
-                  <td><strong>53.8</strong></td>
-                </tr>
-                <tr data-tooltip="3DRS">
-                  <td>3DRS</td>
-                  <td>60.6</td>
-                  <td>30.3</td>
-                  <td>86.1</td>
-                  <td>62.9</td>
-                </tr>
-                <tr data-tooltip="video-3d-llm">
-                  <td>Video-3D-LLM</td>
-                  <td>58.6</td>
-                  <td>30.1</td>
-                  <td>83.8</td>
-                  <td>58.1</td>
-                </tr>
-                <tr data-tooltip="llava3d">
-                  <td>LLaVA-3D</td>
-                  <td>55.6</td>
-                  <td>27.0</td>
-                  <td>79.2</td>
-                  <td>54.1</td>
-                </tr>
-                <tr data-tooltip="chatscene">
-                  <td>ChatScene</td>
-                  <td>54.6</td>
-                  <td>21.6</td>
-                  <td>77.1</td>
-                  <td>55.5</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3>Object Navigation Benchmarks</h3>
-          <div class="table-container">
-            <table class="interactive-table">
-              <thead>
-                <tr>
-                  <th>Method</th>
-                  <th>HM3D (SR)</th>
-                  <th>HM3D (SPL)</th>
-                  <th>MP3D (SR)</th>
-                  <th>MP3D (SPL)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr data-tooltip="Our method demonstrates superior object navigation capabilities">
-                  <td><strong>OmniEVA (Ours)</strong></td>
-                  <td><strong>74.2</strong></td>
-                  <td><strong>42.5</strong></td>
-                  <td><strong>59.1</strong></td>
-                  <td><strong>26.2</strong></td>
-                </tr>
-                <tr data-tooltip="UniNavid baseline performance">
-                  <td>UniNavid</td>
-                  <td>73.7</td>
-                  <td>37.1</td>
-                  <td>-</td>
-                  <td>-</td>
-                </tr>
-                <tr data-tooltip="OVRL object navigation results">
-                  <td>OVRL</td>
-                  <td>62.0</td>
-                  <td>26.8</td>
-                  <td>28.6</td>
-                  <td>7.4</td>
-                </tr>
-                <tr data-tooltip="InstructNav object navigation results">
-                  <td>InstructNav</td>
-                  <td>58.0</td>
-                  <td>20.9</td>
-                  <td>-</td>
-                  <td>-</td>
-                </tr>
-                <tr data-tooltip="CoW object navigation baseline">
-                  <td>VLFM</td>
-                  <td>52.5</td>
-                  <td>30.4</td>
-                  <td>36.4</td>
-                  <td>17.5</td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="table-grid-item">
+              <h4>Object Navigation Benchmarks</h4>
+              <div class="table-container">
+                <table class="interactive-table">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th title="HM3D Success Rate">HM3D (SR)</th>
+                      <th title="HM3D Success weighted by Path Length">HM3D (SPL)</th>
+                      <th title="MP3D Success Rate">MP3D (SR)</th>
+                      <th title="MP3D Success weighted by Path Length">MP3D (SPL)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-tooltip="Our method demonstrates superior object navigation capabilities">
+                      <td><strong>OmniEVA (Ours)</strong></td>
+                      <td><strong>74.2</strong></td>
+                      <td><strong>42.5</strong></td>
+                      <td><strong>59.1</strong></td>
+                      <td><strong>26.2</strong></td>
+                    </tr>
+                    <tr data-tooltip="UniNavid baseline performance">
+                      <td>UniNavid</td>
+                      <td>73.7</td>
+                      <td>37.1</td>
+                      <td>-</td>
+                      <td>-</td>
+                    </tr>
+                    <tr data-tooltip="OVRL object navigation results">
+                      <td>OVRL</td>
+                      <td>62.0</td>
+                      <td>26.8</td>
+                      <td>28.6</td>
+                      <td>7.4</td>
+                    </tr>
+                    <tr data-tooltip="InstructNav object navigation results">
+                      <td>InstructNav</td>
+                      <td>58.0</td>
+                      <td>20.9</td>
+                      <td>-</td>
+                      <td>-</td>
+                    </tr>
+                    <tr data-tooltip="CoW object navigation baseline">
+                      <td>VLFM</td>
+                      <td>52.5</td>
+                      <td>30.4</td>
+                      <td>36.4</td>
+                      <td>17.5</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>       
 
