@@ -690,7 +690,7 @@
       </button>
       <ul class="nav-links">
         <li><a href="#abstract">Abstract</a></li>
-        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#Method">Method</a></li>
         <li><a href="#results">Results</a></li>
         <li><a href="#references">References</a></li>
       </ul>
@@ -749,20 +749,19 @@
           Abstract
         </h2>
         <p>
-          Recent progress in multimodal large language models (MLLMs) has opened new avenues for embodied intelligence, yet current designs struggle with two key challenges: (1) Geometric Adaptability Gap—limited spatial understanding due to reliance on 2D inputs or rigid 3D encoding; and (2) Embodiment Constraint Gap—failure to account for real-world robotic constraints, leading to impractical plans. To overcome these, we propose OmniEVA, a versatile embodied planner featuring: (1) Task-Adaptive 3D Grounding, which selectively fuses 3D data based on context; and (2) Embodiment-Aware Reasoning, integrating task goals with physical constraints for executable planning. OmniEVA enables flexible 3D integration and robust planning across navigation, manipulation, and long-horizon tasks, achieving state-of-the-art performance in diverse embodied environments.
+          Recent progress in multimodal large language models (MLLMs) has opened new avenues for embodied intelligence, yet current designs struggle with two key challenges: (1) <strong>Geometric Adaptability Gap</strong>—limited spatial understanding due to reliance on 2D inputs or rigid 3D encoding; and (2) <strong>Embodiment Constraint Gap</strong>—failure to account for real-world robotic constraints, leading to impractical plans. To overcome these, we propose OmniEVA, a versatile embodied planner featuring: (1) <strong>Task-Adaptive 3D Grounding</strong>, which selectively fuses 3D data based on context; and (2) <strong>Embodiment-Aware Reasoning</strong>, integrating task goals with physical constraints for executable planning. OmniEVA enables flexible 3D integration and robust planning across navigation, manipulation, and long-horizon tasks, achieving state-of-the-art performance in diverse embodied environments.
         </p>
       </section>
 
-      <!-- Introduction -->
-      <section class="section" id="introduction">
+      <!-- Method -->
+      <section class="section" id="Method">
         <h2>
           <i class="fas fa-lightbulb"></i>
-          Introduction
+          Method
         </h2>
         <div class="intro-content">
           <p class="intro-main">
-            We present <strong>OmniEVA</strong> (Embodied Versatile Planner), a unified framework for embodied task planning and reasoning. 
-            OmniEVA dynamically integrates 2D and 3D inputs via task-conditioned feature selection, enabling flexible and efficient multimodal understanding.
+            To address these limitations, we introduce <strong>OmniEVA</strong> (Embodied Versatile Planner), a novel architecture that pioneers <strong>Task-Adaptive 3D Grounding</strong> and <strong>Embodiment-aware Reasoning</strong>. OmniEVA is the first framework to dynamically unify 2D and 3D inputs via task-conditioned feature selection, supporting both general embodied reasoning and grounded embodied task planning through two key innovations:
           </p>
 
           <h4 class="key-innovations-title">
@@ -775,8 +774,7 @@
             1. Task-Adaptive 3D Grounding
           </h5>
           <p style="margin-bottom: 1.5rem;">
-            A gated routing mechanism selectively incorporates 3D features into the visual-language backbone based on task context, 
-            ensuring spatial grounding only when necessary and improving performance across both 2D and 3D tasks.
+            We introduce a gated routing mechanism that dynamically modulates the infusion of 3D features into the visual-language backbone based on contextual task requirements. This allows for explicit, selective geometric grounding only when spatially essential, avoiding the drawbacks of static 3D fusion and enabling robust performance across both 2D and 3D reasoning tasks.
           </p>
           
           <div class="media-container">
@@ -791,8 +789,7 @@
             2. Embodiment-Aware Reasoning
           </h5>
           <p style="margin-bottom: 1.5rem;">
-            OmniEVA combines task goals, environmental context, and physical constraints to generate executable plans. 
-            Post-training with our TE-GRPO algorithm ensures decisions respect object affordances, workspace limits, and kinematic feasibility.
+            Moving beyond passive scene understanding, OmniEVA jointly incorporates task goals, environmental context, and physical constraints into its reasoning process. Through post-training with our proposed Task- and Embodiment-aware GRPO (TE-GRPO) algorithm, the model ensures that planning decisions account for object affordances, workspace boundaries, and kinematic feasibility, enabling decisions that are both logically coherent and physically executable.
           </p>
 
           <div class="media-container">
