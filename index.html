@@ -323,6 +323,22 @@
       border-left: 5px solid #667eea;
     }
 
+    /* Key innovations styling */
+    .key-innovations-title {
+      color: #1e293b;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 1.5rem 0 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .key-innovations-title i {
+      color: #667eea;
+      font-size: 1rem;
+    }
+
     /* Table styling */
     .table-container {
       overflow-x: auto;
@@ -675,7 +691,6 @@
       <ul class="nav-links">
         <li><a href="#abstract">Abstract</a></li>
         <li><a href="#introduction">Introduction</a></li>
-        <li><a href="#method">Method</a></li>
         <li><a href="#results">Results</a></li>
         <li><a href="#references">References</a></li>
       </ul>
@@ -754,65 +769,39 @@
             <i class="fas fa-star"></i>
             Key Innovations
           </h4>
-          <div class="innovations-grid">
-            <div class="innovation-item">
-              <div class="innovation-header">
-                <i class="fas fa-cube"></i>
-                <h5>Task-Adaptive 3D Grounding</h5>
-              </div>
-              <p>
-                A gated routing mechanism selectively incorporates 3D features into the visual-language backbone based on task context, 
-                ensuring spatial grounding only when necessary and improving performance across both 2D and 3D tasks.
-              </p>
-            </div>
-            
-            <div class="innovation-item">
-              <div class="innovation-header">
-                <i class="fas fa-robot"></i>
-                <h5>Embodiment-Aware Reasoning</h5>
-              </div>
-              <p>
-                OmniEVA combines task goals, environmental context, and physical constraints to generate executable plans. 
-                Post-training with our TE-GRPO algorithm ensures decisions respect object affordances, workspace limits, and kinematic feasibility.
-              </p>
+          
+          <h5 style="color: #334155; font-weight: 600; margin: 1.5rem 0 1rem 0; display: flex; align-items: center; gap: 0.5rem; font-size: 1.4rem;">
+            <i class="fas fa-cube" style="color: #667eea;"></i>
+            1. Task-Adaptive 3D Grounding
+          </h5>
+          <p style="margin-bottom: 1.5rem;">
+            A gated routing mechanism selectively incorporates 3D features into the visual-language backbone based on task context, 
+            ensuring spatial grounding only when necessary and improving performance across both 2D and 3D tasks.
+          </p>
+          
+          <div class="media-container">
+            <img src="assets/model-architecture.png" alt="Model Architecture" width="100%" />
+            <div style="text-align: center; margin-top: 0.8rem; color: #64748b; font-style: italic;">
+              Figure 1: Detailed architecture of OmniEVA showing the Task-Adaptive 3D Grounding mechanism
             </div>
           </div>
-        </div>
 
-        <h3>Overall Framework</h3>
-        <div class="media-container">
-          <img src="assets/overall.png" alt="Overall Framework" width="100%" />
-          <div style="text-align: center; margin-top: 0.8rem; color: #64748b; font-style: italic;">
-            Figure 1: Overall framework of OmniEVA showing the complete pipeline and architecture
+          <h5 style="color: #334155; font-weight: 600; margin: 2rem 0 1rem 0; display: flex; align-items: center; gap: 0.5rem; font-size: 1.4rem;">
+            <i class="fas fa-robot" style="color: #667eea;"></i>
+            2. Embodiment-Aware Reasoning
+          </h5>
+          <p style="margin-bottom: 1.5rem;">
+            OmniEVA combines task goals, environmental context, and physical constraints to generate executable plans. 
+            Post-training with our TE-GRPO algorithm ensures decisions respect object affordances, workspace limits, and kinematic feasibility.
+          </p>
+
+          <div class="media-container">
+            <img src="assets/overall.png" alt="Overall Framework" width="100%" />
+            <div style="text-align: center; margin-top: 0.8rem; color: #64748b; font-style: italic;">
+              Figure 2: Overall framework of OmniEVA showing the complete pipeline and Embodiment-Aware Reasoning
+            </div>
           </div>
         </div>
-      </section>
-
-      <!-- Method -->
-      <section class="section" id="method">
-        <h2>
-          <i class="fas fa-cogs"></i>
-          Method
-        </h2>
-        <p>
-          OmniEVA introduces two key innovations to address the limitations of current MLLM-based embodied systems: 
-          (1) Task-Adaptive 3D Grounding mechanism with a gated router for context-aware 3D fusion, and 
-          (2) Embodiment-Aware Reasoning framework that incorporates both task goals and embodiment constraints.
-        </p>
-
-        <h3>Model Architecture</h3>
-        <div class="media-container">
-          <img src="assets/model-architecture.png" alt="Model Architecture" width="100%" />
-          <div style="text-align: center; margin-top: 0.8rem; color: #64748b; font-style: italic;">
-            Figure 2: Detailed architecture of OmniEVA showing the Task-Adaptive 3D Grounding and Embodiment-Aware Reasoning components
-          </div>
-        </div>
-
-        <p>
-          The architecture consists of multiple interconnected modules that work together to enable versatile embodied planning. 
-          The Task-Adaptive 3D Grounding mechanism allows the model to selectively incorporate 3D information based on task requirements, 
-          while the Embodiment-Aware Reasoning framework ensures that generated plans are both goal-directed and physically executable.
-        </p>
       </section>
 
       <!-- Experimental Results -->
