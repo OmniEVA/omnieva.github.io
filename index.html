@@ -150,17 +150,17 @@
     }
 
     .btn {
-      padding: 10px 20px;
+      padding: 12px 24px;
       border: none;
       border-radius: 25px;
       font-weight: 600;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.6rem;
       transition: all 0.3s ease;
       cursor: pointer;
-      font-size: 0.95rem;
+      font-size: 1.14rem;
     }
 
     .btn-primary {
@@ -477,37 +477,6 @@
       height: 100%;
     }
 
-    /* References */
-    .references ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    .references li {
-      background: #f8fafc;
-      margin: 0.8rem 0;
-      padding: 1.2rem;
-      border-radius: 8px;
-      border-left: 4px solid #667eea;
-      position: relative;
-    }
-
-    .references li::before {
-      content: attr(data-ref);
-      position: absolute;
-      left: -15px;
-      top: 1.2rem;
-      background: #667eea;
-      color: white;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-      font-weight: 600;
-    }
 
     /* Footer */
     .footer {
@@ -692,7 +661,6 @@
         <li><a href="#abstract">Abstract</a></li>
         <li><a href="#Method">Method</a></li>
         <li><a href="#results">Results</a></li>
-        <li><a href="#references">References</a></li>
       </ul>
     </div>
   </nav>
@@ -701,7 +669,7 @@
   <section class="hero">
     <div class="hero-content">
       <div style="display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-bottom: 0.5rem;">
-        <img src="assets/ominieva_logo.png" alt="OmniEVA Logo" style="height: 100px; width: auto; filter: brightness(0) invert(1); image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;" />
+        <img src="assets/ominieva_logo.png" alt="OmniEVA Logo" style="height: 100px; width: auto; filter: brightness(0) invert(1) contrast(1.1) saturate(1); image-rendering: smooth; image-rendering: high-quality; image-rendering: -webkit-optimize-contrast; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; transform: translateZ(0); backface-visibility: hidden;" />
         <h1 style="margin: 0; text-align: left;">
           Embodied Versatile Planner via Task-Adaptive <br>3D-Grounded and Embodiment-aware Reasoning
         </h1>
@@ -1080,27 +1048,6 @@
 
       </section>
 
-      <!-- References -->
-      <section class="section references" id="references">
-        <h2>
-          <i class="fas fa-book"></i>
-          References
-        </h2>
-        <ul>
-          <li data-ref="[1]">
-            Brown, T., Mann, B., Ryder, N., et al. (2020). <em>Language Models are Few-Shot Learners</em>. 
-            Advances in Neural Information Processing Systems, 33, 1877-1901.
-          </li>
-          <li data-ref="[2]">
-            Radford, A., Kim, J. W., Hallacy, C., et al. (2021). <em>Learning Transferable Visual Models From Natural Language Supervision</em>. 
-            International Conference on Machine Learning, PMLR, 139, 8748-8763.
-          </li>
-          <li data-ref="[3]">
-            Alayrac, J. B., Donahue, J., Luc, P., et al. (2022). <em>Flamingo: a Visual Language Model for Few-Shot Learning</em>. 
-            Advances in Neural Information Processing Systems, 35, 23716-23736.
-          </li>
-        </ul>
-      </section>
     </div>
   </main>
 
