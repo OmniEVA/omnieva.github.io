@@ -1,5 +1,93 @@
 /* Additional styles for enhanced interactivity */
 
+/* Benchmarks container for side-by-side layout */
+.benchmarks-container {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 1.5rem 0;
+  padding: 0 4rem;
+}
+
+.benchmark-item {
+  flex: 1;
+  min-width: 400px;
+  max-width: 700px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.benchmark-item img {
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  transition: opacity 0.3s ease;
+  object-position: center;
+}
+
+/* Use width-based sizing for consistent visual appearance */
+.benchmark-item img[src*="3d-reasoning-benchmarks"] {
+  width: 100%;
+  height: auto;
+  max-height: 447px;
+  object-fit: contain;
+}
+
+.benchmark-item img[src*="objnav-benchmarks"] {
+  width: 75%;
+  height: auto;
+  max-height: 447px;
+  object-fit: contain;
+}
+
+.benchmark-item:hover img {
+  opacity: 0.95;
+}
+
+/* Responsive design for benchmarks */
+@media (max-width: 900px) {
+  .benchmarks-container {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 0 2rem;
+  }
+  
+  .benchmark-item {
+    min-width: auto;
+    max-width: 100%;
+  }
+  
+  .benchmark-item img[src*="3d-reasoning-benchmarks"] {
+    width: 100%;
+    max-height: 399px;
+  }
+  
+  .benchmark-item img[src*="objnav-benchmarks"] {
+    width: 75%;
+    max-height: 399px;
+  }
+}
+
+@media (max-width: 600px) {
+  .benchmarks-container {
+    padding: 0 1rem;
+  }
+  
+  .benchmark-item img[src*="3d-reasoning-benchmarks"] {
+    width: 100%;
+    max-height: 321px;
+  }
+  
+  .benchmark-item img[src*="objnav-benchmarks"] {
+    width: 75%;
+    max-height: 321px;
+  }
+}
+
 /* Image styling for seamless integration - completely borderless */
 .media-container {
   background: transparent;
