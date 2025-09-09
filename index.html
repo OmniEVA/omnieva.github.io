@@ -144,6 +144,40 @@
       font-weight: 500;
       color: #333;
       margin: 0.3rem 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+    }
+
+    .institution-logos {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      height: 60px;
+    }
+
+    .institution-logo {
+      height: 50px;
+      width: auto;
+      object-fit: contain;
+      max-width: 150px;
+      display: block;
+    }
+
+    /* Ensure consistent height for both logos */
+    .institution-logo:first-child {
+      height: 50px;
+    }
+    
+    .institution-logo:last-child {
+      height: 50px;
+    }
+
+    .institution-text {
+      text-align: center;
     }
 
     .paper-links {
@@ -714,7 +748,13 @@
         Jianye Hao,
         Xingyue Quan
         <br>
-        <div class="institution">Huawei Noah's Ark Lab</div>
+        <div class="institution">
+          <div class="institution-logos">
+            <img src="assets/huawei-logo.png" alt="Huawei Logo" class="institution-logo" />
+            <img src="assets/noah-logo.jpg" alt="Noah's Ark Lab Logo" class="institution-logo" />
+          </div>
+          <div class="institution-text">Huawei Noah's Ark Lab</div>
+        </div>
         <small><sup>*</sup>Equal contribution, <sup>†</sup>Corresponding author</small>
       </div>
 
