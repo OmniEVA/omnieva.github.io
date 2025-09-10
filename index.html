@@ -89,7 +89,7 @@
     .hero-content {
       position: relative;
       z-index: 1;
-      max-width: 1120px;
+      max-width: 1400px;
       margin: 0 auto;
       padding: 0 2rem;
     }
@@ -100,6 +100,8 @@
       margin: 0 0 0.5rem;
       color: black;
       line-height: 1.1;
+      min-width: 600px;
+      flex: 1;
     }
 
     .highlight-letter {
@@ -125,6 +127,28 @@
       font-weight: 300;
       margin: 0 0 1rem;
       color: #333;
+    }
+
+    /* Title container styling */
+    .title-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: -0.1rem;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 1200px) {
+      .title-container {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .hero h1 {
+        min-width: auto;
+        text-align: center;
+      }
     }
 
     .authors {
@@ -721,7 +745,7 @@
   <!-- Hero Section -->
   <section class="hero">
     <div class="hero-content">
-      <div style="display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-bottom: -0.1rem;">
+      <div class="title-container">
         <div class="logo-container" style="position: relative;">
           <!-- Logo image -->
           <img src="assets/ominieva_logo.png" alt="OmniEVA Logo" class="main-logo" />
