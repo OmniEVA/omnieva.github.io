@@ -3,18 +3,18 @@
 /* Benchmarks container for side-by-side layout */
 .benchmarks-container {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: space-between;
   flex-wrap: wrap;
-  margin: 1.5rem 0;
-  padding: 0 4rem;
+  margin: 2rem 0;
+  padding: 0 3rem;
 }
 
 .benchmark-item {
   flex: 1;
-  min-width: 400px;
-  max-width: 700px;
+  min-width: 450px;
+  max-width: 800px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -31,17 +31,26 @@
 
 /* Use width-based sizing for consistent visual appearance */
 .benchmark-item img[src*="3d-reasoning-benchmarks"] {
-  width: 100%;
+  width: 120%;
   height: auto;
-  max-height: 447px;
+  max-height: 536px;
   object-fit: contain;
 }
 
 .benchmark-item img[src*="objnav-benchmarks"] {
-  width: 75%;
+  width: 90%;
   height: auto;
-  max-height: 447px;
+  max-height: 536px;
   object-fit: contain;
+  display: block;
+  margin-left: auto;
+  margin-right: 0;
+}
+
+/* Align the second benchmark item (objnav) to the right */
+.benchmark-item:nth-child(2) {
+  align-self: flex-end;
+  text-align: right;
 }
 
 .benchmark-item:hover img {
@@ -52,7 +61,7 @@
 @media (max-width: 900px) {
   .benchmarks-container {
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 2rem;
     padding: 0 2rem;
   }
   
@@ -62,29 +71,36 @@
   }
   
   .benchmark-item img[src*="3d-reasoning-benchmarks"] {
-    width: 100%;
-    max-height: 399px;
+    width: 120%;
+    max-height: 479px;
   }
   
   .benchmark-item img[src*="objnav-benchmarks"] {
-    width: 75%;
-    max-height: 399px;
+    width: 90%;
+    max-height: 479px;
+    display: block;
+    margin-left: auto;
+    margin-right: 0;
   }
 }
 
 @media (max-width: 600px) {
   .benchmarks-container {
     padding: 0 1rem;
+    gap: 1.5rem;
   }
   
   .benchmark-item img[src*="3d-reasoning-benchmarks"] {
-    width: 100%;
-    max-height: 321px;
+    width: 110%;
+    max-height: 385px;
   }
   
   .benchmark-item img[src*="objnav-benchmarks"] {
-    width: 75%;
-    max-height: 321px;
+    width: 85%;
+    max-height: 385px;
+    display: block;
+    margin-left: auto;
+    margin-right: 0;
   }
 }
 
