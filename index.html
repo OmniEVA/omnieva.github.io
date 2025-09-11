@@ -537,6 +537,61 @@
       height: 100%;
     }
 
+    /* Video Grid Layout */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .video-item {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .video-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .video-item video {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .video-caption {
+      padding: 0.8rem;
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #334155;
+      background: #f8fafc;
+    }
+
+    /* Responsive video grid */
+    @media (max-width: 1200px) {
+      .video-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .video-grid {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+      }
+      
+      .video-item video {
+        height: 180px;
+      }
+    }
+
 
     /* Footer */
     .footer {
@@ -919,6 +974,38 @@
           </div>
         </div>
 
+        <h3>Real World Experiments</h3>
+        <div class="video-grid">
+          <div class="video-item">
+            <video width="100%" height="200" controls>
+              <source src="videos/long_table_place_1.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div class="video-caption">Mobile Placement</div>
+          </div>
+          <div class="video-item">
+            <video width="100%" height="200" controls>
+              <source src="videos/square_table_place.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div class="video-caption">Mobile Placement</div>
+          </div>
+          <div class="video-item">
+            <video width="100%" height="200" controls>
+              <source src="videos/where2approach_1.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div class="video-caption">Mobile Placement</div>
+          </div>
+          <div class="video-item">
+            <video width="100%" height="200" controls>
+              <source src="videos/where2approach_2.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div class="video-caption">Mobile Placement</div>
+          </div>
+        </div>
+
         <h3>Video Demonstration</h3>
         <div class="media-container">
           <div class="video-placeholder">
@@ -1003,7 +1090,7 @@
               },
               {
                 label: 'OmniEVA (Ours)',
-                data: [74.95, 57.17, 21.01, 85.59],
+                data: [74.95, 57.17, 21.01, 91.19],
                 backgroundColor: '#FF6347',
                 borderColor: '#FF6347',
                 borderWidth: 1
