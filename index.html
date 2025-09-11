@@ -379,9 +379,23 @@
 
     /* Abstract styling */
     .abstract {
-      background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
-      border-left: 5px solid #667eea;
+      background: linear-gradient(135deg, #f8faff 0%, #f1f5f9 100%);
+      border-left: 3px solid #667eea;
+      position: relative;
+      border-top: 1px solid rgba(102, 126, 234, 0.1);
     }
+    
+    .abstract::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(102, 126, 234, 0.3) 0%, transparent 100%);
+    }
+
+    /* Method section styling - removed to match Results section */
 
     /* Key innovations styling */
     .key-innovations-title {
@@ -468,7 +482,7 @@
 
     /* Media styling */
     .media-container {
-      margin: 2.5rem 0;
+      margin: 1rem 0;
       padding: 0;
       border-radius: 0;
       overflow: visible;
@@ -862,7 +876,7 @@
           Abstract
         </h2>
         <p>
-          Recent progress in multimodal large language models (MLLMs) has opened new avenues for embodied intelligence, yet current designs struggle with two key challenges: (1) <strong>Geometric Adaptability Gap</strong>—limited spatial understanding due to reliance on 2D inputs or rigid 3D encoding; and (2) <strong>Embodiment Constraint Gap</strong>—failure to account for real-world robotic constraints, leading to impractical plans. To overcome these, we propose OmniEVA, a versatile embodied planner featuring: (1) <strong>Task-Adaptive 3D Grounding</strong>, which selectively fuses 3D data based on context; and (2) <strong>Embodiment-Aware Reasoning</strong>, integrating task goals with physical constraints for executable planning. OmniEVA enables flexible 3D integration and robust planning across navigation, manipulation, and long-horizon tasks, achieving state-of-the-art performance in diverse embodied environments.
+          Recent progress in multimodal large language models (MLLMs) has unlocked new possibilities for embodied intelligence, enabling multimodal understanding, reasoning, interaction, and spatial decision-making. However, current MLLM-based systems face two major challenges: (1) <strong>the Geometric Adaptability Gap</strong>, where reliance on 2D inputs or rigid 3D geometry limits spatial generalization and adaptability; and (2) <strong>the Embodiment Constraint Gap</strong>, where physical limitations of real robots are often overlooked, leading to impractical task plans. To overcome these issues, we present <strong>OmniEVA</strong>, a versatile embodied planner featuring two core innovations: (1) a <strong>Task-Adaptive 3D Grounding</strong> mechanism with a gated router for context-sensitive 3D fusion, and (2) an <strong>Embodiment-Aware Reasoning</strong> framework that integrates task goals with physical constraints for executable planning. Extensive experiments show OmniEVA achieves state-of-the-art performance in general embodied reasoning and excels across diverse downstream tasks. Benchmark evaluations confirm its robust and flexible planning capabilities.
         </p>
       </section>
 
@@ -873,16 +887,11 @@
           Method
         </h2>
         <div class="intro-content">
-          <p class="intro-main">
+          <p style="margin-bottom: 1.5rem;">
             To address these limitations, we introduce <strong>OmniEVA</strong> (Embodied Versatile Planner), a novel architecture that pioneers <strong>Task-Adaptive 3D Grounding</strong> and <strong>Embodiment-aware Reasoning</strong>. OmniEVA is the first framework to dynamically unify 2D and 3D inputs via task-conditioned feature selection, supporting both general embodied reasoning and grounded embodied task planning through two key innovations:
           </p>
-
-          <h4 class="key-innovations-title">
-            <i class="fas fa-star"></i>
-            Key Innovations
-          </h4>
           
-          <h5 style="color: #334155; font-weight: 600; margin: 1.5rem 0 1rem 0; display: flex; align-items: center; gap: 0.5rem; font-size: 1.4rem;">
+          <h5 style="color: #334155; font-weight: 600; margin: 1.5rem 0 1rem 0; display: flex; align-items: center; gap: 0.5rem; font-size: 1.4rem; border: none; padding-left: 0;">
             <i class="fas fa-cube" style="color: #667eea;"></i>
             1. Task-Adaptive 3D Grounding
           </h5>
@@ -897,7 +906,7 @@
             </div>
           </div>
 
-          <h5 style="color: #334155; font-weight: 600; margin: 2rem 0 1rem 0; display: flex; align-items: center; gap: 0.5rem; font-size: 1.4rem;">
+          <h5 style="color: #334155; font-weight: 600; margin: 2rem 0 1rem 0; display: flex; align-items: center; gap: 0.5rem; font-size: 1.4rem; border: none; padding-left: 0;">
             <i class="fas fa-robot" style="color: #667eea;"></i>
             2. Embodiment-Aware Reasoning
           </h5>
@@ -951,6 +960,9 @@
         </div>
         
         <h3>2D Reasoning Benchmarks</h3>
+        <p>
+          OmniEVA consistently achieves <em>state-of-the-art</em> performance across all 2D reasoning benchmarks, surpassing significantly larger models including Robobrain-2.0-32B, GPT-4o, and Gemini-2.5-Pro. On average, it delivers a performance gain of <strong>+10.45</strong> compared with previous SOTA—Robobrain-32B.
+        </p>
         <div class="media-container">
           <img src="assets/2d-reasoning-benchmarks.png" alt="2D Reasoning Benchmarks Results" width="90%" style="max-width: 1000px;" />
           <div style="text-align: center; margin-top: 0.8rem; color: #64748b; font-style: italic;">
