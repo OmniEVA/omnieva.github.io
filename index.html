@@ -572,7 +572,7 @@
       grid-template-rows: 1fr 1fr;
       gap: 1rem;
       margin: 1.5rem 0;
-      height: 440px; /* Adjust height to accommodate 2 rows */
+      height: 460px; /* Optimized height for smaller captions */
     }
 
     .video-item-large {
@@ -592,7 +592,7 @@
 
     .video-item-large video {
       width: 100%;
-      height: calc(100% - 60px); /* Account for caption */
+      height: calc(100% - 40px); /* Account for smaller caption */
       object-fit: cover;
       display: block;
     }
@@ -617,13 +617,23 @@
       display: block;
     }
 
+    /* Special styling for video items in grid-special layout */
+    .video-grid-special .video-item video {
+      height: calc(100% - 40px); /* Reserve space for smaller caption */
+    }
+
     .video-caption {
-      padding: 0.8rem;
+      padding: 0.5rem;
       text-align: center;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 500;
       color: #334155;
       background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     /* Responsive video grid */
@@ -641,6 +651,10 @@
       .video-item-large {
         grid-column: 1;
         grid-row: 1 / 3;
+      }
+
+      .video-grid-special .video-item video {
+        height: 180px; /* Fixed height for better caption visibility on smaller screens */
       }
     }
 
@@ -1142,7 +1156,7 @@
           <!-- Large video on the left spanning 2 rows -->
           <div class="video-item-large">
             <video width="100%" controls>
-              <source src="videos/make_coffee.mp4" type="video/mp4">
+              <source src="videos/make_coffee_v2.mp4" type="video/mp4">
               Your browser does not support the video tag.
             </video>
             <div class="video-caption">Make Coffee</div>
@@ -1154,21 +1168,21 @@
               <source src="videos/square_table_place.mp4" type="video/mp4">
               Your browser does not support the video tag.
             </video>
-            <div class="video-caption">Square Table Placement</div>
+            <div class="video-caption">Placement with Obstacles</div>
           </div>
           <div class="video-item">
             <video width="100%" height="200" controls>
               <source src="videos/where2approach_1.mp4" type="video/mp4">
               Your browser does not support the video tag.
             </video>
-            <div class="video-caption">Where to Approach 1</div>
+            <div class="video-caption">Mobile Placement </div>
           </div>
           <div class="video-item">
             <video width="100%" height="200" controls>
               <source src="videos/where2approach_2.mp4" type="video/mp4">
               Your browser does not support the video tag.
             </video>
-            <div class="video-caption">Where to Approach 2</div>
+            <div class="video-caption">Placement with Obstacles</div>
           </div>
           
           <!-- Bottom row of 3 videos on the right -->
@@ -1177,21 +1191,21 @@
               <source src="videos/long_table_place_1.mp4" type="video/mp4">
               Your browser does not support the video tag.
             </video>
-            <div class="video-caption">Long Table Placement</div>
+            <div class="video-caption">Mobile Placement</div>
           </div>
           <div class="video-item">
             <video width="100%" height="200" controls>
-              <source src="videos/find_cup.mp4" type="video/mp4">
+              <source src="videos/workstation_place_1.mp4" type="video/mp4">
               Your browser does not support the video tag.
             </video>
-            <div class="video-caption">Find Cup</div>
+            <div class="video-caption">Workstation Delivery</div>
           </div>
           <div class="video-item">
             <video width="100%" height="200" controls>
-              <source src="videos/go_to_workstation_pantry.mp4" type="video/mp4">
+              <source src="videos/workstation_place_2.mp4" type="video/mp4">
               Your browser does not support the video tag.
             </video>
-            <div class="video-caption">Go to Workstation Pantry</div>
+            <div class="video-caption">Workstation Delivery</div>
           </div>
         </div>
 
@@ -1199,42 +1213,31 @@
         <div class="video-grid">
           <div class="video-item">
             <video width="100%" height="200" controls>
-              <source src="videos/find_cup.mp4" type="video/mp4">
+              <source src="videos/find_cup_v2.mp4" type="video/mp4">
               Your browser does not support the video tag.
             </video>
             <div class="video-caption">Find a cup for me.</div>
           </div>
           <div class="video-item">
             <video width="100%" height="200" controls>
-              <source src="videos/go_to_workstation_pantry.mp4" type="video/mp4">
+              <source src="videos/go_to_workstation_pantry_v2.mp4" type="video/mp4">
               Your browser does not support the video tag.
             </video>
             <div class="video-caption">Go to position xx and get back to the pantry.</div>
           </div>
           <div class="video-item">
             <video width="100%" height="200" controls>
-              <source src="videos/turn_and_move.mp4" type="video/mp4">
+              <source src="videos/turn_and_move_v2.mp4" type="video/mp4">
               Your browser does not support the video tag.
             </video>
-            <div class="video-caption">Turn right and move forward 2.0 meters</div>
+            <div class="video-caption">Turn right and go 2.0 meters</div>
           </div>
           <div class="video-item">
             <video width="100%" height="200" controls>
-              <source src="videos/make_coffee.mp4" type="video/mp4">
+              <source src="videos/go_to_printer.mp4" type="video/mp4">
               Your browser does not support the video tag.
             </video>
-            <div class="video-caption">Make a cup of coffee and place it on the table.</div>
-          </div>
-        </div>
-
-        <h3>Video Demonstration</h3>
-        <div class="media-container">
-          <div class="video-placeholder">
-            <div class="placeholder-text">
-              <i class="fas fa-play-circle"></i>
-              <div>Interactive demo video showcasing OmniEVA capabilities</div>
-              <small>Video 1: Real-time multi-modal evaluation demonstration</small>
-            </div>
+            <div class="video-caption">Go to the printer behind the pantry.</div>
           </div>
         </div>
 
