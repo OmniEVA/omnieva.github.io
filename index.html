@@ -67,7 +67,7 @@
       font-weight: 500;
       transition: color 0.3s ease;
       padding: 0.5rem 1rem;
-      border-radius: 20px;
+      border-radius: 15px;
       transition: all 0.3s ease;
     }
 
@@ -210,9 +210,9 @@
     }
 
     .btn {
-      padding: 10px 20px;
+      padding: 8px 18px;
       border: none;
-      border-radius: 20px;
+      border-radius: 15px;
       font-weight: 600;
       text-decoration: none;
       display: inline-flex;
@@ -225,6 +225,28 @@
 
     .btn i {
       font-size: 0.85rem;
+    }
+
+    /* Special styling for buttons with coming soon text */
+    .btn.btn-coming-soon {
+      flex-direction: column;
+      text-align: center;
+      gap: 0.05rem;
+      padding: 6px 16px;
+      line-height: 1.2;
+    }
+
+    .btn.btn-coming-soon .btn-main-content {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .btn small {
+      font-size: 0.6rem;
+      opacity: 0.8;
+      margin-top: 0.02rem;
+      line-height: 1.1;
     }
 
     .btn-primary {
@@ -957,13 +979,19 @@
           <i class="fas fa-file-pdf"></i>
           Paper
         </a>
-        <a href="#" class="btn btn-primary">
-          <i class="fas fa-code"></i>
-          Code
+        <a href="#" class="btn btn-primary btn-coming-soon">
+          <div class="btn-main-content">
+            <i class="fas fa-code"></i>
+            <span>Code</span>
+          </div>
+          <small>(coming soon)</small>
         </a>
-        <a href="#" class="btn btn-primary">
-          <i class="fas fa-database"></i>
-          Benchmark
+        <a href="#" class="btn btn-primary btn-coming-soon">
+          <div class="btn-main-content">
+            <i class="fas fa-database"></i>
+            <span>Benchmark</span>
+          </div>
+          <small>(coming soon)</small>
         </a>
       </div>
     </div>
