@@ -80,7 +80,7 @@
     .hero {
       background: white;
       color: black;
-      padding: 5rem 2rem 3rem;
+      padding: 1.5rem 2rem 1rem; /* Reduced padding to show content earlier */
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -274,20 +274,19 @@
     /* Main Content */
     .main-content {
       background: #f8fafc;
-      min-height: 100vh;
       position: relative;
     }
 
     .container {
       max-width: 1120px;
       margin: 0 auto;
-      padding: 1.5rem 1.5rem;
+      padding: 0.3rem 1.5rem; /* Reduced top padding to show content earlier */
     }
 
     .section {
       background: white;
-      margin-bottom: 1.5rem;
-      padding: 1.5rem;
+      margin-bottom: 0.5rem; /* Reduced margin to show more content */
+      padding: 1rem; /* Slightly reduced padding */
       border-radius: 12px;
       box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -727,7 +726,7 @@
       }
       
       .hero {
-        padding: 3.5rem 1rem 2rem;
+        padding: 2.5rem 1rem 1.5rem;
       }
       
       .container {
@@ -828,15 +827,15 @@
     .benchmark-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      margin: 1.5rem 0;
+      gap: 1.2rem;
+      margin: 1rem 0;
     }
 
     .benchmark-grid-item {
       background: #f8fafc;
       border-radius: 8px;
       border: 1px solid #e2e8f0;
-      padding: 1rem;
+      padding: 0.8rem;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
@@ -848,14 +847,14 @@
 
     .benchmark-grid-item img {
       width: 100%;
-      height: 200px;
+      height: 160px;
       object-fit: cover;
       display: block;
     }
 
     .benchmark-grid-item .benchmark-title {
-      padding: 1rem 1rem 0.5rem;
-      font-size: 1.1rem;
+      padding: 0.8rem 0.8rem 0.4rem;
+      font-size: 1rem;
       font-weight: 600;
       color: #334155;
       text-align: center;
@@ -864,22 +863,48 @@
     }
 
     .benchmark-grid-item .benchmark-description {
-      padding: 0.5rem 1rem 1rem;
-      font-size: 0.9rem;
+      padding: 0.4rem 0.8rem 0.8rem;
+      font-size: 0.85rem;
       color: #64748b;
       text-align: center;
       background: white;
-      line-height: 1.4;
+      line-height: 1.3;
+    }
+
+    @media (max-width: 1200px) {
+      .benchmark-grid[style*="grid-template-columns: 1fr 1fr 1fr"] {
+        grid-template-columns: 1fr 1fr;
+      }
+      
+      .benchmark-grid[style*="grid-template-columns: 1fr 1fr 1fr"] .benchmark-grid-item:last-child {
+        grid-column: 1 / -1;
+        max-width: 50%;
+        margin: 0 auto;
+      }
     }
 
     @media (max-width: 768px) {
       .benchmark-grid {
         grid-template-columns: 1fr;
-        gap: 1rem;
+        gap: 0.8rem;
+      }
+      
+      .benchmark-grid[style*="grid-template-columns: 1fr 1fr 1fr"] {
+        grid-template-columns: 1fr;
+      }
+      
+      .benchmark-grid[style*="grid-template-columns: 1fr 1fr 1fr"] .benchmark-grid-item:last-child {
+        grid-column: auto;
+        max-width: none;
+        margin: 0;
       }
       
       .benchmark-grid-item img {
-        height: 180px;
+        height: 140px;
+      }
+      
+      .benchmark-grid-item {
+        padding: 0.6rem;
       }
     }
 
@@ -1117,14 +1142,32 @@
       <!-- Benchmark -->
       <section class="section" id="benchmark">
         <h2>
-          <i class="fas fa-target"></i>
+          <i class="fas fa-tachometer-alt"></i>
           Benchmark
         </h2>
+        <h3>Primitive Benchmarks</h3>
         <p>
-          We introduce four additional benchmarks that link primitive capabilities to composite downstream tasks:
-          <strong>Where2Go</strong>, <strong>Where2Fit</strong>, <strong>Where2Approach</strong>, and <strong>Where2Grasp</strong>. Each benchmark targets a core skill essential for long-horizon planning.
+          To evaluate the model's capacities in versatile embodied tasks with physical constraints, we introduce four benchmarks that connect primitive embodied capabilities with composite downstream tasks:
+          <strong>Where2Go</strong>, <strong>Where2Fit</strong>, <strong>Where2Approach</strong>, and <strong>Where2Grasp</strong>. This VQA-style approach substantially reduces evaluation overhead compared to simulator-based online evaluation.
         </p>
         
+        <div style="margin: 1.5rem 0; padding: 1rem; background: #f8fafc; border-left: 3px solid #667eea; border-radius: 4px;">
+          <ul style="margin: 0; padding-left: 1.2rem; color: #475569;">
+            <li style="margin-bottom: 0.8rem;">
+              <strong>Where2Go:</strong> The agent selects the most informative next view from multiple images to locate a target object in partially observable environments. This aligns closely with <strong>Large Space Object Seeking</strong> tasks, requiring spatial layout inference and decision-making under uncertainty.
+            </li>
+            <li style="margin-bottom: 0.8rem;">
+              <strong>Where2Fit:</strong> The agent identifies free space on tables by predicting 2D points while considering physical constraints including object location, size, and collision potential. This is highly relevant to <strong>Mobile Placement (Easy)</strong> tasks.
+            </li>
+            <li style="margin-bottom: 0.8rem;">
+              <strong>Where2Approach:</strong> The agent identifies free table space not obstructed by chairs, demanding reasoning under occlusion and handling locomotion/manipulation constraints. This aligns with <strong>Mobile Placement (Hard)</strong> tasks in geometrically challenging scenarios.
+            </li>
+            <li style="margin-bottom: 0;">
+              <strong>Where2Grasp:</strong> The agent identifies objects based on color, size, location, and category, emphasizing object-centric recognition and directly aligning with <strong>Mobile Pick-up</strong> task requirements.
+            </li>
+          </ul>
+        </div>
+                
         <div class="benchmark-grid">
           <div class="benchmark-grid-item">
             <div class="benchmark-title">Where2Go</div>
@@ -1150,6 +1193,51 @@
         
         <div style="text-align: center; margin-top: 1.5rem; color: #64748b; font-style: italic;">
           Figure: Overview of the four embodied reasoning benchmarks: Where2Go, Where2Fit, Where2Approach, and Where2Grasp
+        </div>
+
+        <h3>Composite Tasks</h3>
+        <p>
+          To evaluate long-horizon planning capabilities, we introduce three composite mobile manipulation tasks that combine multiple primitive skills and require integrated reasoning across navigation, manipulation, and spatial understanding. Our evaluation set comprises over 30 representative scenarios featuring diverse background configurations, varying initial robot poses, and a range of object types, sizes, and locations.
+        </p>
+        
+        <div style="margin: 1.5rem 0; padding: 1rem; background: #f8fafc; border-left: 3px solid #667eea; border-radius: 4px;">
+          <ul style="margin: 0; padding-left: 1.2rem; color: #475569;">
+            <li style="margin-bottom: 0.8rem;">
+              <strong>Mobile Pickup:</strong> Involves grasping various objects across diverse scenes and tabletop configurations, directly building on the <strong>Where2Grasp</strong> primitive capability. The task requires precise pickup operations considering reachability and grasp constraints.
+            </li>
+            <li style="margin-bottom: 0.8rem;">
+              <strong>Mobile Placement (Easy):</strong> The robot considers immediate table surface conditions (e.g., object occlusion) to determine optimal placement locations, leveraging skills from <strong>Where2Fit</strong> before placing the object. Navigate to a designated area and place an object at an accessible location with minimal obstacles.
+            </li>
+            <li style="margin-bottom: 0;">
+              <strong>Mobile Placement (Hard):</strong> The robot must first determine optimal chassis poses while accounting for environmental constraints imposed by spatial arrangements of tabletop objects and surrounding chairs, using the same challenging settings as <strong>Where2Approach</strong>. Navigate through complex environments and place objects in challenging locations with spatial constraints.
+            </li>
+          </ul>
+        </div>
+                
+        <div class="benchmark-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+          <div class="benchmark-grid-item">
+            <div class="benchmark-title">Mobile Placement (Easy)</div>
+            <img src="assets/mobile_placement_easy.png" alt="Mobile Placement Easy Task" />
+            <div class="benchmark-description"></div>
+          </div>
+          <div class="benchmark-grid-item">
+            <div class="benchmark-title">Mobile Placement (Hard)</div>
+            <img src="assets/mobile_placement_hard.png" alt="Mobile Placement Hard Task" />
+            <div class="benchmark-description"></div>
+          </div>
+          <div class="benchmark-grid-item">
+            <div class="benchmark-title">Mobile Pickup</div>
+            <img src="assets/mobile_pickup.png" alt="Mobile Pickup Task" />
+            <div class="benchmark-description"></div>
+          </div>
+        </div>
+        
+        <p style="margin-top: 1.5rem; color: #475569; font-style: italic; text-align: center;">
+          The evaluation involves navigating to target poses, followed by assessing trajectory planning for safe object placement, with success rates calculated based on task completion accuracy.
+        </p>
+        
+        <div style="text-align: center; margin-top: 1.5rem; color: #64748b; font-style: italic;">
+          Figure: Overview of the three composite mobile manipulation tasks
         </div>
       </section>
 

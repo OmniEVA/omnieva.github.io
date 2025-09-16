@@ -1,5 +1,7 @@
 // Enhanced interactivity for OmniEVA blog
 document.addEventListener('DOMContentLoaded', function() {
+    // Check if user prefers reduced motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     // Smooth scrolling for navigation links
     const navLinks = document.querySelectorAll('.nav-links a');
     navLinks.forEach(link => {
@@ -207,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const target = parseFloat(counter.textContent.replace('%', ''));
                 // Only proceed if parseFloat returned a valid number
                 if (isNaN(target)) return;
-                const increment = target / 50;
+                const increment = target / 30; // Faster animation (30 steps instead of 50)
                 let current = 0;
                 
                 const updateCounter = () => {
@@ -218,7 +220,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         } else {
                             counter.textContent = current.toFixed(2);
                         }
-                        setTimeout(updateCounter, 30);
+                        setTimeout(updateCounter, 20); // Faster intervals (20ms instead of 30ms)
                     } else {
                         if (counter.textContent.includes('%')) {
                             counter.textContent = target.toFixed(1) + '%';
@@ -228,7 +230,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 };
                 
-                // Only animate when element comes into view
+                // Only animate when element comes into view - with much more responsive settings
                 const observer = new IntersectionObserver(entries => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
@@ -236,16 +238,19 @@ document.addEventListener('DOMContentLoaded', function() {
                             observer.unobserve(entry.target);
                         }
                     });
+                }, {
+                    threshold: 0.01, // Much lower threshold
+                    rootMargin: '200px 0px 200px 0px' // Start animation much earlier
                 });
                 observer.observe(counter);
             }
         });
     }
 
-    // Section fade-in animation on scroll
+    // Section fade-in animation on scroll - much more responsive
     const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: 0.01, // Very low threshold for immediate triggering
+        rootMargin: '300px 0px 300px 0px' // Show sections much earlier - larger margin
     };
 
     const sectionObserver = new IntersectionObserver((entries) => {
@@ -257,13 +262,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }, observerOptions);
 
-    // Observe all sections
+    // Make ALL sections immediately visible to eliminate dynamic loading delays
     const sections = document.querySelectorAll('.section');
-    sections.forEach(section => {
-        section.style.opacity = '0';
-        section.style.transform = 'translateY(30px)';
-        section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        sectionObserver.observe(section);
+    sections.forEach((section, index) => {
+        // Make all sections immediately visible for better user experience
+        section.style.opacity = '1';
+        section.style.transform = 'translateY(0)';
+        section.style.transition = 'none'; // Remove all transitions for immediate loading
+        
+        // Only apply minimal animation for sections beyond the first 3 if motion is preferred
+        if (!prefersReducedMotion && index > 2) {
+            section.style.transition = 'opacity 0.1s ease'; // Minimal transition
+            sectionObserver.observe(section);
+        }
     });
 
     // Initialize all table features
@@ -358,7 +369,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Lazy loading for images
+    // Aggressive image loading - load images much earlier
     if ('IntersectionObserver' in window) {
         const imageObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
@@ -369,10 +380,28 @@ document.addEventListener('DOMContentLoaded', function() {
                     observer.unobserve(img);
                 }
             });
+        }, {
+            threshold: 0.01,
+            rootMargin: '500px 0px 500px 0px' // Load images much earlier
         });
 
+        // Load all images with data-src immediately on page load to reduce dynamic loading
         document.querySelectorAll('img[data-src]').forEach(img => {
-            imageObserver.observe(img);
+            // Load critical images immediately
+            const isCritical = img.closest('.hero') || img.closest('.section[id="Method"]') || 
+                             img.closest('.section[id="benchmark"]');
+            if (isCritical) {
+                img.src = img.dataset.src;
+                img.classList.remove('loading');
+            } else {
+                imageObserver.observe(img);
+            }
+        });
+    } else {
+        // Fallback: load all images immediately if IntersectionObserver is not supported
+        document.querySelectorAll('img[data-src]').forEach(img => {
+            img.src = img.dataset.src;
+            img.classList.remove('loading');
         });
     }
 });

@@ -1,5 +1,29 @@
 /* Additional styles for enhanced interactivity */
 
+/* Reduce dynamic loading delays - make images load immediately */
+img[data-src] {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+img.loading {
+  opacity: 0.8 !important; /* Show loading images with slight transparency instead of hiding */
+}
+
+/* Make all sections immediately visible to reduce dynamic loading */
+.section {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Override any animation delays */
+@media (prefers-reduced-motion: no-preference) {
+  .section {
+    animation: none !important;
+    transition-delay: 0s !important;
+  }
+}
+
 /* Benchmarks container for side-by-side layout */
 .benchmarks-container {
   display: flex;
