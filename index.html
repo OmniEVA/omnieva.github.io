@@ -824,6 +824,65 @@
       }
     }
 
+    /* Benchmark grid 2x2 layout */
+    .benchmark-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin: 1.5rem 0;
+    }
+
+    .benchmark-grid-item {
+      background: #f8fafc;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      padding: 1rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .benchmark-grid-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .benchmark-grid-item img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .benchmark-grid-item .benchmark-title {
+      padding: 1rem 1rem 0.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #334155;
+      text-align: center;
+      background: white;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .benchmark-grid-item .benchmark-description {
+      padding: 0.5rem 1rem 1rem;
+      font-size: 0.9rem;
+      color: #64748b;
+      text-align: center;
+      background: white;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 768px) {
+      .benchmark-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      
+      .benchmark-grid-item img {
+        height: 180px;
+      }
+    }
+
     /* Enhanced Logo Styles with Beautiful Integration */
     .logo-container {
       position: relative;
@@ -931,6 +990,7 @@
       <ul class="nav-links">
         <li><a href="#abstract">Abstract</a></li>
         <li><a href="#Method">Method</a></li>
+        <li><a href="#benchmark">Benchmark</a></li>
         <li><a href="#results">Results</a></li>
       </ul>
     </div>
@@ -1051,6 +1111,44 @@
               Figure 2: Overall framework of OmniEVA showing the complete pipeline and Embodiment-Aware Reasoning
             </div>
           </div>
+        </div>
+      </section>
+
+      <!-- Benchmark -->
+      <section class="section" id="benchmark">
+        <h2>
+          <i class="fas fa-target"></i>
+          Benchmark
+        </h2>
+        <p>
+          We introduce four novel embodied reasoning benchmarks that comprehensively evaluate spatial understanding and physical interaction capabilities: <strong>Where2Go</strong>, <strong>Where2Fit</strong>, <strong>Where2Approach</strong>, and <strong>Where2Grasp</strong>. These benchmarks assess different aspects of embodied intelligence, from navigation planning to precise manipulation tasks.
+        </p>
+        
+        <div class="benchmark-grid">
+          <div class="benchmark-grid-item">
+            <div class="benchmark-title">Where2Go</div>
+            <img src="assets/where2go.PNG" alt="Where2Go Benchmark" />
+            <div class="benchmark-description">Prompt: From the provided visual input, identify the most informative image frame (with IDs staring from 1) that offers the best chance of locating the sota.</div>
+          </div>
+          <div class="benchmark-grid-item">
+            <div class="benchmark-title">Where2Fit</div>
+            <img src="assets/where2fit.PNG" alt="Where2Fit Benchmark" />
+            <div class="benchmark-description">Prompt: Locate some free space for me on the table.</div>
+          </div>
+          <div class="benchmark-grid-item">
+            <div class="benchmark-title">Where2Approach</div>
+            <img src="assets/where2appraoch.PNG" alt="Where2Approach Benchmark" />
+            <div class="benchmark-description">Prompt: Locate the closest empty spot on the table that isn't surrounded by chairs.</div>
+          </div>
+          <div class="benchmark-grid-item">
+            <div class="benchmark-title">Where2Grasp</div>
+            <img src="assets/where2grasp.PNG" alt="Where2Grasp Benchmark" />
+            <div class="benchmark-description">Prompt: Locate the cola bottle on the table.</div>
+          </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 1.5rem; color: #64748b; font-style: italic;">
+          Figure: Overview of the four embodied reasoning benchmarks: Where2Go, Where2Fit, Where2Approach, and Where2Grasp
         </div>
       </section>
 
