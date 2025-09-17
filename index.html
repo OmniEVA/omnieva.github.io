@@ -550,7 +550,7 @@
     }
 
     .media-container img {
-      max-width: 85%;
+      max-width: 100%;
       width: auto;
       height: auto;
       display: block;
@@ -905,7 +905,7 @@
       }
       
       .media-container img {
-        max-width: 95%;
+        max-width: 100%;
         border-radius: 0;
         box-shadow: none;
       }
@@ -932,14 +932,18 @@
       grid-template-columns: 1fr 1fr;
       gap: 2rem;
       margin: 1.5rem 0;
+      overflow: hidden; /* Prevent overflow */
+      width: 100%;
+      max-width: 100%;
     }
 
     .benchmark-item {
       text-align: center;
+      overflow: hidden; /* Prevent individual items from overflowing */
     }
 
     .benchmark-item img {
-      max-width: none;
+      max-width: 100% !important; /* Ensure images don't exceed container width */
       border-radius: 0;
       box-shadow: none;
     }
@@ -1410,7 +1414,7 @@
           OmniEVA consistently achieves <em>state-of-the-art</em> performance across all 2D reasoning benchmarks (Where2Place, VSI-bench, PACO-LVIS, RoboRefit), surpassing significantly larger models including Robobrain-2.0-32B, GPT-4o, and Gemini-2.5-Pro. On average, it delivers a performance gain of <strong>+10.45</strong> compared with previous SOTA—Robobrain-32B.
         </p>
         <div class="media-container">
-          <img src="assets/2d-reasoning-benchmarks.png" alt="2D Reasoning Benchmarks Results" width="90%" style="max-width: 1000px;" />
+          <img src="assets/2d-reasoning-benchmarks.png" alt="2D Reasoning Benchmarks Results" style="width: 85% !important; height: auto !important; max-width: 100% !important; border: none !important; box-shadow: none !important;" />
           <div style="text-align: center; margin-top: 0.8rem; color: #64748b; font-style: italic;">
             Figure 3: Evaluation results on 2D reasoning benchmarks
           </div>
@@ -1423,15 +1427,19 @@
         <p>
           For <strong>Object Navigation</strong> tasks on HM3D and MP3D datasets, OmniEVA outperforms the state-of-the-art navigation model <strong>UniNavid</strong> in both success rate and path efficiency, achieving a notable +5.4 improvement in SPL by predicting optimal 3D subgoal locations for target object exploration.
         </p>
-        <div class="benchmarks-container">
-          <div class="benchmark-item">
-            <img src="assets/3d-reasoning-benchmarks.png" alt="3D Reasoning Benchmarks Results" style="height: 400px !important; width: auto !important; border: none !important; box-shadow: none !important;" />
+        <div class="benchmarks-container" style="display: flex; gap: 2rem; align-items: flex-start;">
+          <div class="benchmark-item" style="flex: 1;">
+            <div style="height: 350px; display: flex; align-items: center; justify-content: center;">
+              <img src="assets/3d-reasoning-benchmarks.png" alt="3D Reasoning Benchmarks Results" style="max-height: 350px; max-width: 100%; height: auto; width: auto; border: none; box-shadow: none; object-fit: contain;" />
+            </div>
             <div style="text-align: center; margin-top: 0.8rem; color: #64748b; font-style: italic;">
               Figure 4: Results on 3D reasoning benchmarks
             </div>
           </div>
-          <div class="benchmark-item">
-            <img src="assets/objnav-benchmarks.png" alt="Object Navigation Benchmarks Results" style="height: 400px !important; width: auto !important; border: none !important; box-shadow: none !important;" />
+          <div class="benchmark-item" style="flex: 1;">
+            <div style="height: 350px; display: flex; align-items: center; justify-content: center;">
+              <img src="assets/objnav-benchmarks.png" alt="Object Navigation Benchmarks Results" style="max-height: 350px; max-width: 100%; height: auto; width: auto; border: none; box-shadow: none; object-fit: contain;" />
+            </div>
             <div style="text-align: center; margin-top: 0.8rem; color: #64748b; font-style: italic;">
               Figure 5: Results on object navigation benchmarks
             </div>
@@ -1455,7 +1463,7 @@
           To illustrate the conditions under which the <strong>Task-Adaptive Gated Router</strong> (TAGR) activates, we conducted both quantitative and qualitative analysis. First, we examined the activation probabilities of prompt words across various tasks. Language signals related to geometric attributes (e.g., "shape", "square", "rectangular") and spatial verbs (e.g., "throwing", "go", "away") consistently elicited high activation scores. This pattern suggests that such linguistic cues implicitly signal the need for 3D spatial reasoning. Conversely, prompts centered on object counting or generic inquiries (e.g., "many", "nine") exhibited low activation, implying that these tasks rely predominantly on 2D visual features.
         </p>
         <div class="media-container">
-          <img src="assets/TAGR-word-activation.png" alt="TAGR Word Activation Analysis" width="100%" style="max-width: 1000px;" />
+          <img src="assets/TAGR-word-activation.png" alt="TAGR Word Activation Analysis" width="100%" style="max-width: 900px;" />
           <div style="text-align: center; margin-top: 0.8rem; color: #64748b; font-style: italic;">
             Figure 7: Word activation analysis showing activation probabilities across different prompt types
           </div>
@@ -1465,7 +1473,7 @@
           We further illustrate this behavior through qualitative case studies. In the first two examples, querying the shape of a table and a desk activates the 3D gate with differing probabilities: 0.73 for the rectangular table, indicating ambiguity between "square" and "rectangular" and thus a reliance on 3D cues; and 0.52 for the round table, suggesting sufficient 2D visual information. In contrast, object counting and color identification in the two right-hand examples leave the 3D gate inactive, demonstrating the TAGR module's ability to omit 3D features when spatial reasoning is unnecessary.
         </p>
         <div class="media-container">
-          <img src="assets/TAGR-case-study.png" alt="TAGR Case Study Examples" width="90%" style="max-width: 1000px;" />
+          <img src="assets/TAGR-case-study.png" alt="TAGR Case Study Examples" width="90%" style="max-width: 900px;" />
           <div style="text-align: center; margin-top: 0.8rem; color: #64748b; font-style: italic;">
             Figure 8: Qualitative case studies showing different activation scenarios of the TAGR module
           </div>
@@ -1477,7 +1485,7 @@
           Our results demonstrate that the TE-GRPO training method, which jointly optimizes both task rewards and embodiment rewards, leads to significant performance improvements on both primitive skill benchmarks and downstream tasks. Specifically, Where2Approach and Where2Fit exhibit performance gains of 28.95% and 34.28%, respectively. These improvements are also directly reflected in the increased success rates of the Mobile Placement task—by 43% in the Easy variant and 50% in the Hard variant. While both task and embodiment rewards contribute individually to performance enhancement, their combination yields maximized synergistic effects.
         </p>
         <div class="media-container">
-          <img src="assets/embodiment-aware-reasoning.png" alt="Ablation Study of Embodiment-aware Reasoning Results" width="90%" style="max-width: 1000px;" />
+          <img src="assets/embodiment-aware-reasoning.png" alt="Ablation Study of Embodiment-aware Reasoning Results" width="90%" style="max-width: 900px;" />
           <div style="text-align: center; margin-top: 0.8rem; color: #64748b; font-style: italic;">
             Figure 9: Ablation study results showing the effectiveness of Embodiment-aware Reasoning framework
           </div>
@@ -1488,7 +1496,7 @@
           To further understand the model's embodiment awareness, we analyze OmniEVA trained with TE-GRPO. The figure below illustrates its reasoning process. OmniEVA begins by performing task-level analysis, including scenario interpretation, spatial analysis, and textual localization of vacant areas. It then incorporates physical constraints—such as reachability and workspace boundaries—to refine its predictions. Through embodiment-aware reasoning processes and reward reinforcement, the final output is a placement region that satisfies all specified requirements.
         </p>
         <div class="media-container">
-          <img src="assets/embodiment-aware-case-study.png" alt="Embodiment-aware Reasoning Case Study" width="90%" style="max-width: 1000px;" />
+          <img src="assets/embodiment-aware-case-study.png" alt="Embodiment-aware Reasoning Case Study" width="90%" style="max-width: 900px;" />
           <div style="text-align: center; margin-top: 0.8rem; color: #64748b; font-style: italic;">
             Figure 10: Case study showing how OmniEVA adapts to physical and embodiment constraints
           </div>
