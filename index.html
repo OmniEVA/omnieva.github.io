@@ -80,7 +80,7 @@
     .hero {
       background: white;
       color: black;
-      padding: 1.5rem 2rem 1rem; /* Reduced padding to show content earlier */
+      padding: 6rem 2rem 1rem; /* Increased top padding to avoid nav bar overlap */
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -280,13 +280,13 @@
     .container {
       max-width: 1120px;
       margin: 0 auto;
-      padding: 0.3rem 1.5rem; /* Reduced top padding to show content earlier */
+      padding: 0.3rem 3rem; /* Increased horizontal padding for better spacing */
     }
 
     .section {
       background: white;
       margin-bottom: 0.5rem; /* Reduced margin to show more content */
-      padding: 1rem; /* Slightly reduced padding */
+      padding: 2rem 2.5rem; /* Increased padding for better text spacing */
       border-radius: 12px;
       box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -295,6 +295,31 @@
     .section:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    /* Responsive container and section padding */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0.3rem 1.5rem; /* Smaller horizontal padding on mobile */
+      }
+      
+      .section {
+        padding: 1.5rem 1.5rem; /* Reduced padding on mobile for better space usage */
+      }
+      
+      .hero {
+        padding: 5rem 1rem 1rem; /* Adjust hero padding for mobile */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 0.3rem 1rem; /* Even smaller padding on very small screens */
+      }
+      
+      .section {
+        padding: 1rem 1rem; /* Minimal padding on very small screens */
+      }
     }
 
     .section h2 {
